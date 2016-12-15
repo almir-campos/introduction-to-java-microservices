@@ -11,6 +11,8 @@ public class IjmBasicsApplication
 
     public static void main(String[] args)
     {
-        SpringApplication.run(IjmBasicsApplication.class, args);
+        SpringApplication.run(
+                IjmBasicsApplication.class,
+                args);
     }
 }
