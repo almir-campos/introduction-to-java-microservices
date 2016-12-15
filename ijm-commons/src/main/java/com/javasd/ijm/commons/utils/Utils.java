@@ -14,16 +14,53 @@ import java.text.SimpleDateFormat;
 public class Utils
 {
 
+    /**
+     *
+     * @param msg
+     */
     public static void consoleMsg(String msg)
     {
+        consoleMsg( msg, "default");
+    }
+
+    /**
+     *
+     * @param msg
+     * @param color
+     */
+    public static void consoleMsg(String msg, String color)
+    {
+        String ansiColor;
+        switch (color)
+        {
+            case "ok":
+            {
+                ansiColor = "[32m"; //green
+                break;
+            }
+            case "error":
+            {
+                ansiColor = "[31m"; //red
+                break;
+            }
+            default:
+            {
+                ansiColor = "[34m"; //blue
+            }
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "MMM dd,yyyy HH:mm:ss.SSS");
 
         System.out.println(
-                "\n===>>> " +
-                sdf.format( new java.util.Date() ) +
+                "\n" +
+                "\033" +
+                ansiColor +
+                "===>>> " +
+                sdf.format(new java.util.Date()) +
                 " <<<===" +
                 "\n" +
+                "\033" +
+                ansiColor +
                 msg +
                 "\n"
         );
