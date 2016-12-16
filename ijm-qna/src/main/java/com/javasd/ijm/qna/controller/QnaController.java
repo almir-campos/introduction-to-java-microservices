@@ -6,7 +6,9 @@
 package com.javasd.ijm.qna.controller;
 
 import com.javasd.ijm.qna.service.QnaService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,11 @@ public class QnaController
 
     @Autowired
     private QnaService qnaService;
-    
+
+    /**
+     *
+     * @return
+     */
     @RequestMapping(
             value = "/",
             method = RequestMethod.GET)
@@ -32,12 +38,30 @@ public class QnaController
         return "QnA Microservice Root - " +
                 new java.util.Date();
     }
-    
+
+    /**
+     *
+     * @return
+     */
     @RequestMapping(
-    value = "/findAll",
-            method = RequestMethod.GET )
+            value = "/findAll",
+            method = RequestMethod.GET)
     public Object findAll()
     {
         return qnaService.findAll();
+    }
+
+    /**
+     *
+     * @param questionIds
+     * @return
+     */
+    @RequestMapping(
+            value = "/findAllById",
+            method = RequestMethod.POST)
+    public Object findAllById(
+            @RequestBody List<Long> questionIds)
+    {
+        return qnaService.findAll(questionIds);
     }
 }

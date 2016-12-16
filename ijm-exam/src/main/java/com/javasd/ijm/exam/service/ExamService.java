@@ -19,8 +19,22 @@ public class ExamService
     @Autowired
     private ExamRepository examRepository;
             
+    /**
+     *
+     * @return
+     */
     public Object findAll()
     {
         return examRepository.findAll();
+    }
+    
+    /**
+     *
+     * @param examId
+     * @return
+     */
+    public Object findOne( Long examId )
+    {
+        return examRepository.findOne( examId );
     }
 }
