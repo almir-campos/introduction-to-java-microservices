@@ -29,9 +29,9 @@ public class QnaRepositoryAux
      * @param nQuestions
      * @return
      */
-    public Object getRandomQuestions(int nQuestions)
+    public List<Question> getRandomQuestions(int nQuestions)
     {
-        Object randomQuestions = entityManager
+        List<Question> randomQuestions = entityManager
                 .createQuery(
                         "from Question q order by rand()")
                 .setMaxResults( nQuestions )
