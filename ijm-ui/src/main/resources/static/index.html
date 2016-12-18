@@ -5,26 +5,34 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script 
-        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    </head>
-    <body>
-        <div ng-app="UiApp">
-            <div ng-controller="UiController">
-                Ui
-            </div>
-        </div>
-        <script>
-            angular
-                    .module("UiApp", [])
-                    .controller("UiController", function ()
-                    {
-                        console.log("UI Controller up!");
-                    });
-        </script>
-    </body>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script 
+    src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-app="UiApp">
+      <div ng-controller="UiController">
+        <pre>{{exams | json}}</pre>
+      </div>
+    </div>
+    <script>
+      angular
+              .module("UiApp", [])
+              .controller("UiController",
+                      function ($http, $scope)
+                      {
+                          console.log(
+                                  "UI Controller up!");
+                          $http.get("/findAll")
+                                  .then(function (response)
+                                  {
+                                      $scope.exams =
+                                              response.data;
+                                  });
+                      });
+    </script>
+  </body>
 </html>
