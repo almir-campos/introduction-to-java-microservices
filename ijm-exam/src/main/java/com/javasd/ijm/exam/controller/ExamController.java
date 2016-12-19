@@ -74,5 +74,13 @@ public class ExamController
         Exam exam = (Exam) examService.findOne(examId);
         return exam.getQnaQuestionIds();
     }
+    
+    @RequestMapping(
+            value = "/examQnaQuestions",
+            method = RequestMethod.GET)
+    public Object examQnaQuestions(Long examId)
+    {
+        return examService.examQnaQuestions(examId);
+    }
 
 }

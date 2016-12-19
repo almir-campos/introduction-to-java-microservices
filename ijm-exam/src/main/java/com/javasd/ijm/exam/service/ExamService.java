@@ -5,9 +5,13 @@
  */
 package com.javasd.ijm.exam.service;
 
+import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.repository.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -16,9 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExamService
 {
+
     @Autowired
     private ExamRepository examRepository;
-            
+
     /**
      *
      * @return
@@ -27,14 +32,32 @@ public class ExamService
     {
         return examRepository.findAll();
     }
-    
+
     /**
      *
      * @param examId
      * @return
      */
-    public Object findOne( Long examId )
+    public Object findOne(Long examId)
     {
-        return examRepository.findOne( examId );
+        return examRepository.findOne(examId);
+    }
+
+    public Object examQnaQuestions(Long examId)
+    {
+        Exam exam = (Exam) findOne(examId);
+        Long[] examIds = exam.getQnaQuestionIds();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:9017/findAllById";
+
+        ResponseEntity<Question[]> qnaQuestions
+                = restTemplate.postForEntity(
+                        url,
+                        examIds,
+                        Question[].class);
+
+        return qnaQuestions;
+
     }
 }
