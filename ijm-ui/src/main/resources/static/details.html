@@ -34,7 +34,7 @@
                         $scope.examDescription,
                         $scope.examGrade);
 
-                var url = "/examQnaQuestions?examId=" +
+                var url = "/examQnaQuestionsHideCorrect?examId=" +
                         $scope.examId;
                 $http.get(url)
                         .then(function (response)

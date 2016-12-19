@@ -5,6 +5,9 @@
  */
 package com.javasd.ijm.ui.controller;
 
+import com.javasd.ijm.commons.deo.qna.Answer;
+import com.javasd.ijm.commons.deo.qna.Question;
+import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,10 @@ import org.springframework.web.client.RestTemplate;
 public class UiController
 {
 
+    /**
+     *
+     * @return
+     */
     @RequestMapping(
             value = "/findAll",
             method = RequestMethod.GET)
@@ -31,6 +38,11 @@ public class UiController
         return exams;
     }
     
+    /**
+     *
+     * @param examId
+     * @return
+     */
     @RequestMapping(
             value = "/examQnaQuestions",
             method = RequestMethod.GET)
@@ -42,6 +54,32 @@ public class UiController
         Object questions = restTemplate.getForObject(
                 url,
                 Object.class);
+        return questions;
+    }
+    
+    /**
+     *
+     * @param examId
+     * @return
+     */
+    @RequestMapping(
+            value = "/examQnaQuestionsHideCorrect",
+            method = RequestMethod.GET)
+    public Object examQnaQuestionsHideCorrect(Long examId )
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:9005/" +
+                "examQnaQuestions?examId=" + examId;
+        Question[] questions = restTemplate.getForObject(
+                url,
+                Question[].class);
+        for( Question question : questions )
+        {
+            for ( Answer answer : question.getAnswers() )
+            {
+                answer.setCorrect(false);
+            }
+        }
         return questions;
     }
 }
