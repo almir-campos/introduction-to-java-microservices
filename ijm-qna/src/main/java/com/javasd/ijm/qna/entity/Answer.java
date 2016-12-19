@@ -5,32 +5,32 @@
  */
 package com.javasd.ijm.qna.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author acampos
  */
 @Entity
-public class Question implements Serializable
+public class Answer implements Serializable
 {
-
     @Id
     @GeneratedValue
     private Long id;
     private String description;
+    private boolean correct;
     private boolean deleted;
-
-    @OneToMany(
-            mappedBy = "question",
-            cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    
+    @ManyToOne
+    @JoinColumn( name = "question_id" )
+    @JsonIgnore
+    private Question question;
 
     public Long getId()
     {
@@ -52,6 +52,16 @@ public class Question implements Serializable
         this.description = description;
     }
 
+    public boolean isCorrect()
+    {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct)
+    {
+        this.correct = correct;
+    }
+
     public boolean isDeleted()
     {
         return deleted;
@@ -62,14 +72,15 @@ public class Question implements Serializable
         this.deleted = deleted;
     }
 
-    public List<Answer> getAnswers()
+    public Question getQuestion()
     {
-        return answers;
+        return question;
     }
 
-    public void setAnswers(List<Answer> answers)
+    public void setQuestion(Question question)
     {
-        this.answers = answers;
+        this.question = question;
     }
-
+    
+    
 }
