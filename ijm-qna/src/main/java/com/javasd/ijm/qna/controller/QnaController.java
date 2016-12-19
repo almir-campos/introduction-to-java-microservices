@@ -65,17 +65,4 @@ public class QnaController
         return qnaService.findAll(questionIds);
     }
     
-    /**
-     *
-     * @param nQuestions
-     * @return
-     */
-    @RequestMapping(
-            value = "/getRandomQuestions",
-            method = RequestMethod.GET)
-    public Object getRandomQuestions(
-            int nQuestions )
-    {
-        return qnaService.getRandomQuestions(nQuestions);
-    }
 }
