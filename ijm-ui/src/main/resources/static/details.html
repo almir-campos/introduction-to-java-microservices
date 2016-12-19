@@ -14,20 +14,33 @@
   <body>
     <div ng-app="detailsApp">
       <div ng-controller="detailsController">
-        Details for Exam {{examId}}: {{examDescription}}
+        Details for Exam {{examId}}: {{examDescription}} ({{examGrade}})<br />
+        <pre>{{ questions | json }}
       </div>
     </div>
   </body>
   <script type="text/javascript">
     angular.module("detailsApp", [])
-            .controller("detailsController", function ($scope)
+            .controller("detailsController", function (
+                    $scope, $http)
             {
                 $scope.examId = localStorage.getItem("examId");
                 $scope.examDescription = localStorage
                         .getItem("examDescription");
+                $scope.examGrade = localStorage
+                        .getItem("examGrade");
                 console.log(
                         $scope.examId,
-                        $scope.examDescription);
+                        $scope.examDescription,
+                        $scope.examGrade);
+
+                var url = "/examQnaQuestions?examId=" +
+                        $scope.examId;
+                $http.get(url)
+                        .then(function (response)
+                        {
+                            $scope.questions = response.data;
+                        });
             });
   </script>
 </html>
