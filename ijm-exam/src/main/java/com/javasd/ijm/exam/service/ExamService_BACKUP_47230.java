@@ -81,6 +81,10 @@ public class ExamService
         Object randomQuestions = restTemplate.
                 getForObject(url, Object.class);
 
+<<<<<<< HEAD
+        
+=======
+>>>>>>> ecb2a01603260c5cf9e5ec8c13eb0913c773ec4e
         return randomQuestions;
     }
 }
