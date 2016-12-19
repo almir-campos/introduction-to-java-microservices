@@ -75,9 +75,12 @@ public class ExamService
                 = "http://localhost:9017/getRandomQuestions" +
                 "?nQuestions=" + nQuestions;
 
-        ResponseEntity<Question[]> randomQuestions
-                = restTemplate.getForEntity(url,
-                        Question[].class);
+//        ResponseEntity<Question[]> randomQuestions
+//                = restTemplate.getForEntity(url,
+//                        Question[].class);
+        Object randomQuestions = restTemplate.
+                getForObject(url, Object.class);
+
         
         return randomQuestions;
     }
