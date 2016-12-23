@@ -24,7 +24,9 @@ and open the template in the editor.
           Introduction to Java Microservices - Almir Campos, 2017</h5>
       </div>
       <div ng-controller="UiController">
-        <button class="
+        <button
+            ng-click="navToTakeAnExam()"
+            class="
                 w3-btn-block
                 w3-teal
                 w3-large
@@ -96,6 +98,14 @@ and open the template in the editor.
                                       "details.html";
                           }
                           ;
+
+                          // NAVIGATE TO TAKE AN EXAM
+                          //
+                          $scope.navToTakeAnExam = function ()
+                          {
+                              window.location.href =
+                                      "take.html";
+                          };
                       });
     </script>
   </body>

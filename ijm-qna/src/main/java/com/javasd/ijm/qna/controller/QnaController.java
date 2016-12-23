@@ -5,7 +5,6 @@
  */
 package com.javasd.ijm.qna.controller;
 
-import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.qna.service.QnaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

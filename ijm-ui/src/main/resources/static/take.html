@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script 
+    src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <!--STYLES-->
+    <link
+        rel="stylesheet"
+        href="http://www.w3schools.com/lib/w3.css" />
+  </head>
+  <body class="w3-dark-grey w3-myfont">
+
+    <div ng-app="takeApp">
+
+
+
+      <div class=
+           "w3-container w3-center w3-blue-grey w3-margin-bottom">
+        <h5 class=
+            "w3-myfont">Introduction to Java Microservices - Almir Campos, 2017</h5>
+      </div>
+
+
+
+      <div ng-controller="takeController">
+        <button 
+            class="
+            w3-btn-block
+            w3-teal 
+            w3-xlarge 
+            w3-margin-bottom"
+            ng-click="examList()">Exam List</button>
+
+
+        <div class="w3-container w3-text-white w3-margin-bottom ws-padding">
+
+          <div style="float: left;">
+            Description: 
+            <input
+                ng-model="examDescription">
+          </div>
+
+          <div style="float:right;">
+            <span>nQuestions:</span>
+            <input 
+                style="direction: rtl"
+                type="number"
+                min="1"
+                max="99"
+                ng-model="nQuestions"
+                ng-init="nQuestions = 2">
+
+            <button 
+                class="w3-btn w3-teal"
+                ng-click="getQuestions()">
+
+              Get</button>
+
+          </div>
+        </div>
+
+
+        
+        <div
+            style="clear: both;"
+            ng-repeat="question in questions">
+
+
+
+          <div class="w3-container w3-grey" style="width: 100%;">
+            <span
+                class="w3-text-black w3-large w3-padding">
+              <strong>
+                {{$index + 1}})
+                {{question.description}}
+              </strong>
+              <span style="float: right;">
+                [Question Id: {{question.id}}]
+              </span>
+            </span>
+          </div>
+
+
+          <ol type="a" style="margin-left: 3em;">
+            <li 
+                ng-repeat="answer in question.answers"
+                class="w3-large">              
+              
+              <input
+                  type="radio" 
+                  style="height: 15px; width: 15px;"
+                  name="question_{{question.id}}"/>
+              
+              
+              {{answer.description}}
+              <span style="float: right; margin-right: 1em;">
+                [Answer Id: {{answer.id}}]
+              </span>
+            </li>
+          </ol>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    angular.module("takeApp", [])
+            .controller("takeController", function (
+                    $scope, $http)
+            {
+                //
+                //
+                $scope.getQuestions = function ()
+                {
+                    var url = "/getRandomQuestionsHideCorrect?nQuestions=" +
+                            $scope.nQuestions;
+                    $http.get(url)
+                            .then(function (response)
+                            {
+                                $scope.questions = response.data;
+                            });
+                };
+
+
+                //
+                //
+                $scope.examList = function () {
+                    window.location.href = "index.html";
+                };
+            });
+  </script>
+</html>
