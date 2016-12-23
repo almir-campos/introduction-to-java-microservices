@@ -10,6 +10,12 @@
     <link
         rel="stylesheet"
         href="http://www.w3schools.com/lib/w3.css" />
+    <style>
+      .isChecked{
+          border: 1px dashed yellow;
+          padding: 5px;
+      }
+    </style>
   </head>
   <body class="w3-dark-grey w3-myfont">
 
@@ -63,7 +69,7 @@
         </div>
 
 
-        
+
         <div
             style="clear: both;"
             ng-repeat="question in questions">
@@ -87,15 +93,21 @@
           <ol type="a" style="margin-left: 3em;">
             <li 
                 ng-repeat="answer in question.answers"
-                class="w3-large">              
-              
+                class="w3-large"
+                >              
+
               <input
-                  type="radio" 
+                  type="radio"
+                  value="{{answer.id}}"
                   style="height: 15px; width: 15px;"
-                  name="question_{{question.id}}"/>
-              
-              
-              {{answer.description}}
+                  name="question_{{question.id}}"
+                  ng-model="$parent.chosenAnswerId"
+                  ng-click="chooseAnswer(question, answer)"
+                  />
+
+              <label ng-class="{ 'isChecked' : $parent.chosenAnswerId === '' + answer.id }">
+                {{answer.description}}
+              </label>
               <span style="float: right; margin-right: 1em;">
                 [Answer Id: {{answer.id}}]
               </span>
@@ -103,7 +115,21 @@
           </ol>
 
 
+
         </div>
+        
+        <button 
+            class="
+            w3-btn-block
+            w3-teal 
+            w3-large 
+            w3-margin-bottom"
+            ng-click="submitExam()"
+            ng-show="showSubmitButton">Submit Exam</button>
+
+        <!--<pre>{{ questions | json }}</pre>-->
+
+
       </div>
     </div>
   </body>
@@ -123,14 +149,36 @@
                             .then(function (response)
                             {
                                 $scope.questions = response.data;
+                                $scope.showSubmitButton = true;
                             });
                 };
-
 
                 //
                 //
                 $scope.examList = function () {
                     window.location.href = "index.html";
+                };
+
+                //
+                //
+                $scope.chooseAnswer = function (question, answer)
+                {
+                    angular.forEach(question.answers, function (answer)
+                    {
+                        answer.chosen = false;
+                    });
+                    answer.chosen = true;
+                };
+                
+                //
+                //
+                $scope.submitExam = function ()
+                {
+                  var url = "/saveExam?examDescription="+$scope.examDescription;
+                  console.log( 'EXAM DESCRIPTION ', $scope.examDescription );
+                  $http.post(
+                          url,
+                          $scope.questions);
                 };
             });
   </script>
