@@ -5,6 +5,7 @@
  */
 package com.javasd.ijm.commons.deo.exam;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 /**
@@ -17,6 +18,8 @@ public class ExamQuestion implements Serializable
     private Long qna_question_id;
     private Long qna_answer_id;
     private boolean deleted;
+    @JsonIgnore
+    private Exam exam;
     
 
     /**
@@ -91,4 +94,15 @@ public class ExamQuestion implements Serializable
         this.deleted = deleted;
     }
 
+    public Exam getExam()
+    {
+        return exam;
+    }
+
+    public void setExam(Exam exam)
+    {
+        this.exam = exam;
+    }
+
+    
 }
