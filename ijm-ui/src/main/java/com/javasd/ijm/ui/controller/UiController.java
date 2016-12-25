@@ -113,5 +113,13 @@ public class UiController
         Utils.consoleMsg("EXAM ID/controller: " + examId);
         return uiService.deleteExam(examId);
     }
+    
+    @RequestMapping(
+            value = "/updateExamDescription",
+            method = RequestMethod.POST)
+    public Object updateExamDescription( Long examId, String examDescription )
+    {
+        return uiService.updateExamDescription(examId, examDescription);
+    }
 
 }

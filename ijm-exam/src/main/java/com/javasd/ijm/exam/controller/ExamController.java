@@ -127,4 +127,15 @@ public class ExamController
         Utils.consoleMsg( "EXAM/CONTROLLER/DELETE EXAM/EXAM ID: " + examId );
         return examService.deleteExam(examId);
     }
+    
+    @RequestMapping(
+            value = "/updateExamDescription",
+            method = RequestMethod.POST )
+    public Object updateExamDescription( @RequestBody Exam exam )
+    {
+        Long examId = exam.getId();
+        String examDescription = exam.getDescription();
+//        Utils.consoleMsg( "EXAM/CONTROLLER/DELETE EXAM/EXAM ID: " + examId );
+        return examService.updateExamDescription(examId, examDescription );
+    }
 }
