@@ -59,6 +59,17 @@
           </ol>
 
         </div>
+
+        <button 
+            class="
+            w3-btn-block
+            w3-teal 
+            w3-large 
+            w3-margin-bottom"
+            ng-click="deleteExam()">
+          Delete Exam
+        </button>
+
         <!--<pre>{{ questions | json }}-->
       </div>
     </div>
@@ -104,6 +115,20 @@
                 //
                 $scope.examList = function () {
                     window.location.href = "index.html";
+                };
+                //
+                //
+                $scope.deleteExam = function ()
+                {
+                    if (confirm("Click OK to delete the exam '"+ $scope.examDescription + "' [id: " + $scope.examId +"]'"))
+                    {
+                        var deleteExamUrl = "/deleteExam?examId=" + $scope.examId;
+                        $http.post(deleteExamUrl)
+                                .then(function (response)
+                                {
+                                    window.location.href = "index.html";
+                                });
+                    }
                 };
             });
   </script>

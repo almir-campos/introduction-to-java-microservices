@@ -6,6 +6,7 @@
 package com.javasd.ijm.ui.controller;
 
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.ui.service.UiService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,7 @@ public class UiController
             method = RequestMethod.GET)
     public Object getAnsweredExam(Long examId)
     {
+        Utils.consoleMsg("EXAM ID/controller/getAnsweredExam: " + examId );
         return uiService.getAnsweredExam(examId);
     }
 
@@ -101,6 +103,15 @@ public class UiController
     {
         uiService.saveExam(questions, examDescription);
 
+    }
+
+    @RequestMapping(
+            value = "/deleteExam",
+            method = RequestMethod.POST)
+    public Object deleteExam(Long examId)
+    {
+        Utils.consoleMsg("EXAM ID/controller: " + examId);
+        return uiService.deleteExam(examId);
     }
 
 }
