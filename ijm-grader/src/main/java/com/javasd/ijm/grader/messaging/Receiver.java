@@ -49,11 +49,11 @@ public class Receiver
             Utils.consoleMsg("GRADER/RECEIVER/QUESTION: " + question.getDescription());
         }
         
-        Question[] originalQuestions = graderService.findOriginalQuestions(answeredQuestions);
+        List<Question> originalQuestions = graderService.findOriginalQuestions(answeredQuestions);
         
         GradeCalculator gradeCalculator = new GradeCalculator( 
                 answeredQuestions,
-                Arrays.asList(originalQuestions ));
+                originalQuestions);
         
         double grade = gradeCalculator.calcGrade();
         
