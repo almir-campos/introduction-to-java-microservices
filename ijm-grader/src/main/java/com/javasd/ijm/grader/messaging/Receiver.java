@@ -9,7 +9,6 @@ import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.grader.service.GradeCalculator;
 import com.javasd.ijm.grader.service.GraderService;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
