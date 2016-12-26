@@ -110,7 +110,7 @@ public class UiController
             method = RequestMethod.POST)
     public Object deleteExam(Long examId)
     {
-        Utils.consoleMsg("EXAM ID/controller: " + examId);
+//        Utils.consoleMsg("EXAM ID/controller: " + examId);
         return uiService.deleteExam(examId);
     }
     

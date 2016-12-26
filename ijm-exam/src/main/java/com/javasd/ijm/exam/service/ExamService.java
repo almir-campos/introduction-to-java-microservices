@@ -7,9 +7,9 @@ package com.javasd.ijm.exam.service;
 
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
-import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.entity.ExamQuestion;
+import com.javasd.ijm.exam.messaging.Sender;
 import com.javasd.ijm.exam.repository.ExamRepository;
 import com.javasd.ijm.exam.repository.ExamRepositoryAux;
 import java.util.ArrayList;
@@ -31,6 +31,8 @@ public class ExamService
     private ExamRepository examRepository;
     @Autowired
     private ExamRepositoryAux examRepositoryAux;
+    @Autowired
+    private Sender sender;
 
     /**
      *
@@ -107,7 +109,7 @@ public class ExamService
         exam.setId(0L);
         exam.setDescription(examDescription);
         
-        Utils.consoleMsg(examDescription);
+//        Utils.consoleMsg(examDescription);
 
         List<ExamQuestion> examQuestions = new ArrayList();
         ExamQuestion examQuestion;
@@ -132,7 +134,10 @@ public class ExamService
         }
 
         exam.setExamQuestions(examQuestions);
-        examRepositoryAux.saveExam( exam );
+        Exam savedExam = examRepositoryAux.saveExam( exam );
+        
+        sender.sendToExamToGraderGradeRequestQ( savedExam.getId(), questions );
+        
     }
     
     public Object deleteExam( Long examId )
