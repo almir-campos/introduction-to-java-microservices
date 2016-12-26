@@ -8,6 +8,7 @@ package com.javasd.ijm.grader.service;
 import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class GraderService
     @Autowired
     private RestTemplate restTemplate;
 
-    public Question[] findOriginalQuestions(List<Question> answeredQuestions)
+    public List<Question> findOriginalQuestions(List<Question> answeredQuestions)
     {
         List<Long> answeredQuestionIds = new ArrayList();
         for (Question answeredQuestion : answeredQuestions)
@@ -46,6 +47,6 @@ public class GraderService
                     + originalQuestion.getDescription());
         }
         
-        return originalQuestionsArr;
+        return Arrays.asList(originalQuestionsArr);
     }
 }

@@ -9,7 +9,6 @@ import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.grader.service.GradeCalculator;
 import com.javasd.ijm.grader.service.GraderService;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -49,11 +48,11 @@ public class Receiver
             Utils.consoleMsg("GRADER/RECEIVER/QUESTION: " + question.getDescription());
         }
         
-        Question[] originalQuestions = graderService.findOriginalQuestions(answeredQuestions);
+        List<Question> originalQuestions = graderService.findOriginalQuestions(answeredQuestions);
         
         GradeCalculator gradeCalculator = new GradeCalculator( 
                 answeredQuestions,
-                Arrays.asList(originalQuestions ));
+                originalQuestions);
         
         double grade = gradeCalculator.calcGrade();
         
