@@ -29,4 +29,9 @@ public class LoggerService
     {
         return loggerRepository.save( examLog );
     }
+    
+    public Object findByExamId( Long examId )
+    {
+        return loggerRepository.findByExamId(examId);
+    }
 }

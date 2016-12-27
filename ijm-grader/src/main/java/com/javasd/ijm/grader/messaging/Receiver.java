@@ -61,5 +61,6 @@ public class Receiver
         Utils.consoleMsg("GRADER/RECEIVER/EXAM " + examId + " GRADED: " + grade );
         
         sender.sendToGraderToExamGradeResponseQ( examId, grade );
+        sender.sendToGraderToLoggerRequestQ( examId, grade );
     }
 }

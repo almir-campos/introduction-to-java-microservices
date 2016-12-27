@@ -23,6 +23,9 @@ public class Receiver
 {
     @Autowired
     private ExamService examService;
+    
+    @Autowired
+    private Sender sender;
 
     @Bean
     public Queue graderToExamGradeResponseQ()
@@ -39,6 +42,5 @@ public class Receiver
         Utils.consoleMsg("EXAM/RECEIVER/EXAM ID: " + examId + ", GRADE: " + grade );
         
         Exam updatedExam = (Exam) examService.updateExamGrade(examId, grade );
-        
     }
 }

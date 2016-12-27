@@ -34,5 +34,11 @@ public class LoggerController
     {
         return loggerService.save(examLog);
     }
+    
+    @RequestMapping( value = "/findByExamId", method=RequestMethod.GET)
+    public Object findOne( Long examId )
+    {
+        return loggerService.findByExamId(examId);
+    }
             
 }

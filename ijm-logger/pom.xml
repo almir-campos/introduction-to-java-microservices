@@ -91,7 +91,12 @@
             <artifactId>spring-data-commons</artifactId>
             <type>jar</type>
         </dependency>
-        
+        <!--AMQP-->
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

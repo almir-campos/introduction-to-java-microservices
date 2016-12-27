@@ -32,11 +32,23 @@ public class Sender
     
     public void sendToExamToGraderGradeRequestQ( Long examId, List<Question> questions )
     {
-        Utils.consoleMsg( "EXAM/SENDER/EXAM ID: " + examId );
+        Utils.consoleMsg( "EXAM/SEND TO GRADER/EXAM ID: " + examId );
         for ( Question question : questions )
         {
-            Utils.consoleMsg( "EXAM/SENDER/QUESTION: " + question.getDescription() );
+            Utils.consoleMsg( "EXAM/SEND TO GRADER/QUESTION: " + question.getDescription() );
         }
         rmTemplate.convertAndSend( "examToGraderGradeRequestQ", new Object[]{ examId, questions } );
+    }
+    
+    @Bean
+    public Queue examToLoggerRequestQ()
+    {
+        return new Queue( "examToLoggerRequestQ", false );
+    }
+    
+    public void sendToExamToLoggerRequestQ( Long examId )
+    {
+        Utils.consoleMsg( "EXAM/SEND TO LOGGER/EXAM ID: " + examId );
+        rmTemplate.convertAndSend( "examToLoggerRequestQ", examId );
     }
 }

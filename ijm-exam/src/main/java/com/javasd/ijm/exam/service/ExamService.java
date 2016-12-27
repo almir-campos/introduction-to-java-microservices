@@ -7,6 +7,7 @@ package com.javasd.ijm.exam.service;
 
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.entity.ExamQuestion;
 import com.javasd.ijm.exam.messaging.Sender;
@@ -133,7 +134,9 @@ public class ExamService
         exam.setExamQuestions(examQuestions);
         Exam savedExam = examRepositoryAux.saveExam( exam );
         
+        sender.sendToExamToLoggerRequestQ(savedExam.getId());
         sender.sendToExamToGraderGradeRequestQ( savedExam.getId(), questions );
+        
         
     }
     

@@ -15,7 +15,7 @@ public class ExamLog implements Serializable
 {
     @Id
     public String id; //Notice this is a String, not a Long as we were using before
-    public String examId;
+    public Long examId;
     public Date dateReceived; 
     public Date dataGraded;
     public Double grade;
@@ -31,12 +31,12 @@ public class ExamLog implements Serializable
         this.id = id;
     }
 
-    public String getExamId()
+    public Long getExamId()
     {
         return examId;
     }
 
-    public void setExamId(String examId)
+    public void setExamId(Long examId)
     {
         this.examId = examId;
     }
