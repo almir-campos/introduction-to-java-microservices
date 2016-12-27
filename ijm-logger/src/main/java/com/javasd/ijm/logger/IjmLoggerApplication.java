@@ -4,8 +4,10 @@ import com.javasd.ijm.commons.utils.Utils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 public class IjmLoggerApplication
         implements CommandLineRunner
 {
