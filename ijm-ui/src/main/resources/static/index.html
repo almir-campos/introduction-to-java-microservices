@@ -81,60 +81,77 @@ and open the template in the editor.
               .controller("UiController",
                       function ($http, $scope)
                       {
-                          console.log(
-                                  "UI Controller up!");
-                          $http.get("/findAll")
-                                  .then(function (response)
-                                  {
-                                      $scope.exams =
-                                              response.data;
+                          $http.get("/checkExamMs")
+                                  .then(function (response) {
+                                      console.log("CHECK EXAM MS: " + response.data.status);
+                                      if (response.data.status === "NOK")
+                                      {
+                                          window.location.href = "/study.html";
+                                      } else
+                                      {
+                                          console.log(
+                                                  "UI Controller up!");
+                                          $http.get("/findAll")
+                                                  .then(function (response)
+                                                  {
+                                                      $scope.exams =
+                                                              response.data;
+                                                  });
+                                                  
+                                                  
+                                          // NAVIGATE TO DETAILS
+                                          //
+                                          $scope.navToDetails = function (
+                                                  examId, examDescription, examGrade)
+                                          {
+                                              localStorage.setItem(
+                                                      "examId", examId);
+                                              localStorage.setItem(
+                                                      "examDescription",
+                                                      examDescription);
+                                              localStorage.setItem(
+                                                      "examGrade",
+                                                      examGrade);
+                                              window.location.href =
+                                                      "details.html";
+                                          };
+                                          
+                                          
+                                          // NAVIGATE TO TAKE AN EXAM
+                                          //
+                                          $scope.navToTakeAnExam = function ()
+                                          {
+                                              window.location.href =
+                                                      "take.html";
+                                          };
+                                          
+                                          
+                                          //
+                                          //
+                                          var socket = new SockJS("/uiWebSocket");
+                                          // Subscribing
+                                          //
+                                          var stompClient = Stomp.over(socket);
+                                          stompClient.connect({}, function (frame) {
+                                              console.log("FRAME: ", frame);
+                                              stompClient.subscribe(
+                                                      "/uiMessageBroker/sendExamGradeToFrontEnd",
+                                                      function (webSocketData) {
+                                                          console.log(
+                                                                  "WEBSOCKET DATA:", webSocketData);
+                                                          var examGrade =
+                                                                  JSON.parse(webSocketData.body);
+                                                          console.log("EXAM GRADE: ", examGrade);
+                                                          angular.element(document.querySelector(
+                                                                  "#examGradeFromWebSocket"))
+                                                                  .text(
+                                                                          "The exam " + examGrade[0]
+                                                                          + " was graded: "
+                                                                          + examGrade[1]);
+                                                      });
+                                          });
+                                      }
                                   });
-                          // NAVIGATE TO DETAILS
-                          //
-                          $scope.navToDetails = function (
-                                  examId, examDescription, examGrade)
-                          {
-                              localStorage.setItem(
-                                      "examId", examId);
-                              localStorage.setItem(
-                                      "examDescription",
-                                      examDescription);
-                              localStorage.setItem(
-                                      "examGrade",
-                                      examGrade);
-                              window.location.href =
-                                      "details.html";
-                          }
-                          ;
-
-                          // NAVIGATE TO TAKE AN EXAM
-                          //
-                          $scope.navToTakeAnExam = function ()
-                          {
-                              window.location.href =
-                                      "take.html";
-                          };
-
-                          //
-                          //
-                          var socket = new SockJS("/uiWebSocket");
-                          // Subscribing
-                          //
-                          var stompClient = Stomp.over(socket);
-                          stompClient.connect({}, function (frame) {
-                              console.log("FRAME: ", frame);
-                              stompClient.subscribe("/uiMessageBroker/sendExamGradeToFrontEnd",
-                                      function (webSocketData) {
-                                          console.log("WEBSOCKET DATA:", webSocketData);
-                                          var examGrade = JSON.parse(webSocketData.body);
-                                          console.log("EXAM GRADE: ", examGrade);
-                                          angular.element(document.querySelector(
-                                                  "#examGradeFromWebSocket"))
-                                                  .text("The exam " + examGrade[0]
-                                                          + " was graded: " + examGrade[1]);
-                                      });
-                          });
-
                       });
     </script>
   </body>
