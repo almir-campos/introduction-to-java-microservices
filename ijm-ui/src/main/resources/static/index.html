@@ -10,7 +10,14 @@ and open the template in the editor.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script 
-    src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
+    </script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js">
+    </script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
+    </script>
     <!--STYLES-->
     <link
         rel="stylesheet"
@@ -33,6 +40,7 @@ and open the template in the editor.
             w3-margin-bottom">
           Take an Exam
         </button>
+        <div id="examGradeFromWebSocket" style="float: right; background: red; color: white;"></div>
         <table class="w3-table-all w3-large">
           <thead>
             <tr class="w3-green">
@@ -47,7 +55,7 @@ and open the template in the editor.
               <td>{{exam.id}}</td>
               <td>{{exam.description}}</td>
               <td style="float: right; margin-right: 2em;">
-                {{exam.grade | number: 2}}</td>
+                {{exam.grade| number: 2}}</td>
               <td>
                 <button class="
                         w3-btn
@@ -106,6 +114,27 @@ and open the template in the editor.
                               window.location.href =
                                       "take.html";
                           };
+
+                          //
+                          //
+                          var socket = new SockJS("/uiWebSocket");
+                          // Subscribing
+                          //
+                          var stompClient = Stomp.over(socket);
+                          stompClient.connect({}, function (frame) {
+                              console.log("FRAME: ", frame);
+                              stompClient.subscribe("/uiMessageBroker/sendExamGradeToFrontEnd",
+                                      function (webSocketData) {
+                                          console.log("WEBSOCKET DATA:", webSocketData);
+                                          var examGrade = JSON.parse(webSocketData.body);
+                                          console.log("EXAM GRADE: ", examGrade);
+                                          angular.element(document.querySelector(
+                                                  "#examGradeFromWebSocket"))
+                                                  .text("The exam " + examGrade[0]
+                                                          + " was graded: " + examGrade[1]);
+                                      });
+                          });
+
                       });
     </script>
   </body>
