@@ -140,6 +140,11 @@ public class ExamService
         
     }
     
+    /**
+     *
+     * @param examId
+     * @return
+     */
     public Object deleteExam( Long examId )
     {
         Exam examToDelete = examRepository.findOne(examId);
@@ -147,6 +152,12 @@ public class ExamService
         return examRepository.save( examToDelete );
     }
     
+    /**
+     *
+     * @param examId
+     * @param examDescription
+     * @return
+     */
     public Object updateExamDescription( Long examId, String examDescription )
     {
         Exam examToDelete = examRepository.findOne(examId);
@@ -154,6 +165,12 @@ public class ExamService
         return examRepository.save( examToDelete );
     }
     
+    /**
+     *
+     * @param examId
+     * @param grade
+     * @return
+     */
     public Object updateExamGrade( Long examId, Double grade )
     {
         Exam loadedExam = (Exam) findOne(examId);

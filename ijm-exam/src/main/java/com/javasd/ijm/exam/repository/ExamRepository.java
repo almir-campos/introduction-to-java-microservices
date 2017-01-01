@@ -24,5 +24,10 @@ public interface ExamRepository
      * @return
      */
     List<Exam> findByOrderByIdDesc();
+
+    /**
+     *
+     * @return
+     */
     List<Exam> findByDeletedFalseOrderByIdDesc();
 }

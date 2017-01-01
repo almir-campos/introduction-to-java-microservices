@@ -118,6 +118,11 @@ public class ExamController
         examService.saveExam( questions , examDescription );
     }
     
+    /**
+     *
+     * @param exam
+     * @return
+     */
     @RequestMapping(
             value = "/deleteExam",
             method = RequestMethod.POST )
@@ -128,6 +133,11 @@ public class ExamController
         return examService.deleteExam(examId);
     }
     
+    /**
+     *
+     * @param exam
+     * @return
+     */
     @RequestMapping(
             value = "/updateExamDescription",
             method = RequestMethod.POST )
