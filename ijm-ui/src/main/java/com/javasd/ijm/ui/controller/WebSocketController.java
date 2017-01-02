@@ -22,4 +22,10 @@ public class WebSocketController
     {
         return examGrade;
     }
+    
+    @SendTo("/sendExamAliveToFrontEnd")
+    public Object uiMessageBrokerExamAlive(  Object examAlive)
+    {
+        return examAlive;
+    }
 }
