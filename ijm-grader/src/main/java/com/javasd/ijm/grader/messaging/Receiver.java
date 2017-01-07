@@ -56,7 +56,7 @@ public class Receiver
         
         double grade = gradeCalculator.calcGrade();
         
-        try { Thread.sleep( 5000 ); } catch (Exception e ) { e.printStackTrace(); }
+        try { Thread.sleep( 5000 ); } catch (InterruptedException e ) { e.printStackTrace(); }
         
         Utils.consoleMsg("GRADER/RECEIVER/EXAM " + examId + " GRADED: " + grade );
         
