@@ -6,6 +6,8 @@
 package com.javasd.ijm.commons.deo.qna;
 
 import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -13,111 +15,21 @@ import java.io.Serializable;
  */
 public class Answer implements Serializable
 {
+
+    @Getter
+    @Setter
     private Long id;
+    @Getter
+    @Setter
     private String description;
+    @Getter
+    @Setter
     private boolean correct;
+    @Getter
+    @Setter
     private boolean deleted;
+    @Getter
+    @Setter
     private boolean chosen;
 
-    /**
-     *
-     * @return
-     */
-    public Long getId()
-    {
-        return id;
-    }
-
-    /**
-     *
-     * @param id
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDescription()
-    {
-        return description;
-    }
-
-    /**
-     *
-     * @param description
-     */
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isCorrect()
-    {
-        return correct;
-    }
-
-    /**
-     *
-     * @param correct
-     */
-    public void setCorrect(boolean correct)
-    {
-        this.correct = correct;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isDeleted()
-    {
-        return deleted;
-    }
-
-    /**
-     *
-     * @param deleted
-     */
-    public void setDeleted(boolean deleted)
-    {
-        this.deleted = deleted;
-    }
-
-    public boolean isChosen()
-    {
-        return chosen;
-    }
-
-    public void setChosen(boolean chosen)
-    {
-        this.chosen = chosen;
-    }
-
-    /**
-     *
-     * @return
-     */
-//    public Question getQuestion()
-//    {
-//        return question;
-//    }
-//
-//    /**
-//     *
-//     * @param question
-//     */
-//    public void setQuestion(Question question)
-//    {
-//        this.question = question;
-//    }
-    
-    
 }

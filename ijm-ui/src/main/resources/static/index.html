@@ -69,8 +69,8 @@ and open the template in the editor.
             </tr>
           </thead>
           <tbody class="w3-text-black">
-            <tr ng-repeat="exam in exams">
-              <td>{{exam.id}}{{exam.deleted ? "[D]" : ""}}</td>
+            <tr ng-repeat="exam in exams" class="{{exam.deleted ? 'w3-text-red' : ''}}">
+              <td>{{exam.id}}</td>
               <td>{{exam.description}}</td>
               <td style="float: right; margin-right: 2em;">
                 {{exam.grade| number: 2}}</td>

@@ -28,8 +28,6 @@ public class Exam implements Serializable
     @Getter @Setter
     private List<ExamQuestion> examQuestions;
 
-   
-    
     /**
      *
      * @return
