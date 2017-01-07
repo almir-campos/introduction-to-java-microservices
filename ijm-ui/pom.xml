@@ -52,6 +52,12 @@
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+        <!--LOMBOK-->
+         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <type>jar</type>
+        </dependency>
         <!--SWAGGER2-->
         <dependency>
             <groupId>io.springfox</groupId>
