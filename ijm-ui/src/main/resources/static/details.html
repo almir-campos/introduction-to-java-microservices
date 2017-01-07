@@ -35,6 +35,7 @@
              "w3-container w3-center w3-blue-grey w3-text-black w3-margin-bottom">
           <h3>
             <strong>
+              {{ examDeleted === "true" ? "[D]" : ""}}
               <input
                   value="{{examDescription}}"
                   ng-model="examDescription"/>
@@ -83,6 +84,7 @@
 
         <!--DELETE EXAM BUTTON-->
         <button 
+            ng-hide="{{ examDeleted }}"
             class="
             w3-btn-block
             w3-teal 
@@ -107,10 +109,14 @@
                         .getItem("examDescription");
                 $scope.examGrade = localStorage
                         .getItem("examGrade");
+                $scope.examDeleted = localStorage
+                        .getItem("examDeleted");
+                
                 console.log(
                         $scope.examId,
                         $scope.examDescription,
-                        $scope.examGrade);
+                        $scope.examGrade,
+                        $scope.examDeleted);
                 // GET ANSWERED EXAM
                 //
                 var url = "/getAnsweredExam?examId=" +

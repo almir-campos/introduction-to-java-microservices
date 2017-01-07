@@ -37,11 +37,15 @@ public class ExamService
 
     /**
      *
+     * @param includeDeleted
      * @return
      */
-    public Object findAll()
+    public Object findAll(boolean includeDeleted)
     {
-//        return examRepository.findByOrderByIdDesc();
+        if (includeDeleted)
+        {
+            return examRepository.findByOrderByIdDesc();
+        }
         return examRepository.findByDeletedFalseOrderByIdDesc();
     }
 
@@ -95,20 +99,19 @@ public class ExamService
 
         return randomQuestions;
     }
-    
+
     /**
      *
      * @param questions
      * @param examDescription
      */
-    public void saveExam( List<Question> questions, String examDescription )
+    public void saveExam(List<Question> questions, String examDescription)
     {
         Exam exam = new Exam();
         exam.setId(0L);
         exam.setDescription(examDescription);
-        
-//        Utils.consoleMsg(examDescription);
 
+//        Utils.consoleMsg(examDescription);
         List<ExamQuestion> examQuestions = new ArrayList();
         ExamQuestion examQuestion;
         for (Question question : questions)
@@ -123,8 +126,8 @@ public class ExamService
             {
                 if (answer.isChosen())
                 {
-                    examQuestion.setQna_answer_id( answer.getId() );
-                    
+                    examQuestion.setQna_answer_id(answer.getId());
+
                     break;
                 }
             }
@@ -132,50 +135,49 @@ public class ExamService
         }
 
         exam.setExamQuestions(examQuestions);
-        Exam savedExam = examRepositoryAux.saveExam( exam );
-        
+        Exam savedExam = examRepositoryAux.saveExam(exam);
+
         sender.sendToExamToLoggerRequestQ(savedExam.getId());
-        sender.sendToExamToGraderGradeRequestQ( savedExam.getId(), questions );
-        
-        
+        sender.sendToExamToGraderGradeRequestQ(savedExam.getId(), questions);
+
     }
-    
+
     /**
      *
      * @param examId
      * @return
      */
-    public Object deleteExam( Long examId )
+    public Object deleteExam(Long examId)
     {
         Exam examToDelete = examRepository.findOne(examId);
         examToDelete.setDeleted(true);
-        return examRepository.save( examToDelete );
+        return examRepository.save(examToDelete);
     }
-    
+
     /**
      *
      * @param examId
      * @param examDescription
      * @return
      */
-    public Object updateExamDescription( Long examId, String examDescription )
+    public Object updateExamDescription(Long examId, String examDescription)
     {
         Exam examToDelete = examRepository.findOne(examId);
         examToDelete.setDescription(examDescription);
-        return examRepository.save( examToDelete );
+        return examRepository.save(examToDelete);
     }
-    
+
     /**
      *
      * @param examId
      * @param grade
      * @return
      */
-    public Object updateExamGrade( Long examId, Double grade )
+    public Object updateExamGrade(Long examId, Double grade)
     {
         Exam loadedExam = (Exam) findOne(examId);
         loadedExam.setGrade(grade);
-        return examRepository.save( loadedExam );
+        return examRepository.save(loadedExam);
     }
 
 }

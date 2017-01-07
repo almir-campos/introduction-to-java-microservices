@@ -13,8 +13,6 @@ import com.javasd.ijm.commons.utils.Utils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,9 +31,9 @@ public class UiService
      *
      * @return
      */
-    public Object findAll()
+    public Object findAll( Boolean includeDeleted )
     {
-        String url = "http://localhost:9005/findAll";
+        String url = "http://localhost:9005/findAll?includeDeleted=" + includeDeleted;
         Object exams = restTemplate.getForObject(
                 url,
                 Object.class);
