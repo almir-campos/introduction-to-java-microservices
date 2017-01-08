@@ -12,6 +12,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -88,6 +89,16 @@ public class Sender
         rmTemplate.convertAndSend( "examToUiGradedExamQ", new Object[]{ examId, examGrade} );
     }
     
+    @Bean Queue examToLoggerDeleteExamQ()
+    {
+        return new Queue( "examToLoggerDeleteExamQ", false);
+    }
+    
+    public void sendToExamToLoggerDeleteExamQ( Long examId )
+    {
+        rmTemplate.convertAndSend( "examToLoggerDeleteExamQ", examId );
+    }
+    
     @Bean
     public Queue examToUiExamAliveQ()
     {
@@ -104,9 +115,10 @@ public class Sender
         {
             rmTemplate.convertAndSend("examToUiExamAliveQ", "OK");
         }
-        catch (Exception e)
+        catch (MessagingException e)
         {
             e.printStackTrace();
         }
     }
+    
 }

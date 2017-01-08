@@ -23,6 +23,9 @@ public class ExamLog implements Serializable
     @Getter
     @Setter
     public Date dataGraded;
+     @Getter
+    @Setter
+    public Date dateDeleted;
     @Getter
     @Setter
     public Double grade;

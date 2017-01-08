@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document( collection = "exam_log")
 public class ExamLog implements Serializable
 {
-    @Id@Getter @Setter
+    @Id @Getter @Setter
     public String id; //Notice this is a String, not a Long as we were using before
     @Getter @Setter
     public Long examId;
@@ -24,7 +24,7 @@ public class ExamLog implements Serializable
     @Getter @Setter
     public Date dataGraded;
     @Getter @Setter
-    public Date dataDeleted;
+    public Date dateDeleted;
     @Getter @Setter
     public Double grade;
     @Getter @Setter
