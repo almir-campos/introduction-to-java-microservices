@@ -22,7 +22,7 @@ public class BasicsController
     @RequestMapping( value = "/", method = RequestMethod.GET )
     public Object root()
     {
-        return "Basics Microservices - Up and Running!";
+        return "Basics Microservice - Up and Running!";
     }
 
     
@@ -36,13 +36,22 @@ public class BasicsController
         return new Msg( "Sending an object!");
     }
     
-
+    /**
+     *
+     * @param msg
+     * @return
+     */
     @RequestMapping( value = "/echoGet", method = RequestMethod.GET )
     public Object echoGet( @RequestParam Msg msg )
     {
         return msg;
     }
     
+    /**
+     *
+     * @param msg
+     * @return
+     */
     @RequestMapping( value = "/echoPost", method = RequestMethod.POST )
     public Object echoPost( @RequestBody Msg msg )
     {
