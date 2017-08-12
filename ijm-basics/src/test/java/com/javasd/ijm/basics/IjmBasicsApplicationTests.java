@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestClientException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment
@@ -24,7 +23,7 @@ public class IjmBasicsApplicationTests
     public void contextLoads()
     {
         //System.out.println("\n\n\nTESTS/contextLoads()\n\n\n");
-        Utils.consoleMsg("TESTS/contextLoads - OK");
+        Utils.consoleMsg("TESTS/contextLoads - OK", "ok");
     }
 
     @Test
@@ -37,12 +36,12 @@ public class IjmBasicsApplicationTests
                     "http://localhost:9002/",
                     String.class);
             assertThat(result).contains(
-                    "Q&A Microservices");
-            Utils.consoleMsg( "TESTS/rootTest - OK");
+                    "Basics Microservice");
+            Utils.consoleMsg( "TESTS/rootTest - OK", "ok");
         }
         catch (Exception e)
         {
-            Utils.consoleMsg( "TESTS/rootTest - FAIL");
+            Utils.consoleMsg( "TESTS/rootTest - FAIL", "error");
             e.printStackTrace();
         }
     }
