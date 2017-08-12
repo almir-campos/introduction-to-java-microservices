@@ -22,7 +22,7 @@ public class BasicsController
     @RequestMapping( value = "/", method = RequestMethod.GET )
     public Object root()
     {
-        return "Basics Microservice - Up and Running!";
+        return "Basics Microservice Root - " + new java.util.Date();
     }
 
     
