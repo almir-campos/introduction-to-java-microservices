@@ -5,11 +5,13 @@
  */
 package com.javasd.ijm.commons.misc;
 
+import java.io.Serializable;
+
 /**
  *
  * @author AlmirCampos, ac@javasd.com
  */
-public class Msg
+public class Msg implements Serializable
 {
 
     private String msg;
