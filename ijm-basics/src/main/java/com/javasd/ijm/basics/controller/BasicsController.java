@@ -24,6 +24,7 @@ public class BasicsController
     {
         return "Basics Microservices - Up and Running!";
     }
+
     
     /**
      *
@@ -35,6 +36,7 @@ public class BasicsController
         return new Msg( "Sending an object!");
     }
     
+
     @RequestMapping( value = "/echoGet", method = RequestMethod.GET )
     public Object echoGet( @RequestParam Msg msg )
     {
