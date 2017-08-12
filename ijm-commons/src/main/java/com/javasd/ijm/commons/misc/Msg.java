@@ -11,7 +11,15 @@ package com.javasd.ijm.commons.misc;
  */
 public class Msg
 {
-    private final String msg;
+
+    private String msg;
+
+    /**
+     *
+     */
+    public Msg()
+    {
+    }
 
     /**
      *
@@ -30,5 +38,5 @@ public class Msg
     {
         return msg;
     }
-    
+
 }
