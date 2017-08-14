@@ -7,6 +7,8 @@ package com.javasd.ijm.commons.deo.qna;
 
 import java.io.Serializable;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -15,81 +17,17 @@ import java.util.List;
 public class Question implements Serializable
 {
 
+    @Getter
+    @Setter
     private Long id;
+    @Getter
+    @Setter
     private String description;
+    @Getter
+    @Setter
     private boolean deleted;
+    @Getter
+    @Setter
     private List<Answer> answers;
-
-    /**
-     *
-     * @return
-     */
-    public Long getId()
-    {
-        return id;
-    }
-
-    /**
-     *
-     * @param id
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDescription()
-    {
-        return description;
-    }
-
-    /**
-     *
-     * @param description
-     */
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isDeleted()
-    {
-        return deleted;
-    }
-
-    /**
-     *
-     * @param deleted
-     */
-    public void setDeleted(boolean deleted)
-    {
-        this.deleted = deleted;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<Answer> getAnswers()
-    {
-        return answers;
-    }
-
-    /**
-     *
-     * @param answers
-     */
-    public void setAnswers(List<Answer> answers)
-    {
-        this.answers = answers;
-    }
 
 }

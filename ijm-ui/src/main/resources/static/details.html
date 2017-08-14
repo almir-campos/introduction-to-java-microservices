@@ -98,6 +98,10 @@
         <div>
           <table class="w3-table-all w3-text-black">
             <tr>
+              <td>Date Deleted</td>
+              <td>{{ examLog.dateDeleted | date: 'medium' }}</td>
+            </tr>
+            <tr>
               <td>Date Received</td>
               <td>{{ examLog.dateReceived | date: 'medium' }}</td>
             </tr>
