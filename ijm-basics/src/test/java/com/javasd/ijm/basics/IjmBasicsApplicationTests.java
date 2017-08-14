@@ -33,15 +33,16 @@ public class IjmBasicsApplicationTests
         {
             String result = testRestTemplate
                     .getForObject(
-                    "http://localhost:9002/",
-                    String.class);
+                            "http://localhost:9002/",
+                            String.class);
             assertThat(result).contains(
                     "Basics Microservice");
-            Utils.consoleMsg( "TESTS/rootTest - OK", "ok");
+            Utils.consoleMsg("TESTS/rootTest - OK", "ok");
         }
         catch (Exception e)
         {
-            Utils.consoleMsg( "TESTS/rootTest - FAIL", "error");
+            Utils.consoleMsg("TESTS/rootTest - EXCEPTION",
+                    "error");
             e.printStackTrace();
         }
     }
