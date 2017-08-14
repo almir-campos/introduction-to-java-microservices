@@ -84,6 +84,11 @@ public class UiController
         return questions;
     }
 
+    /**
+     *
+     * @param examId
+     * @return
+     */
     @RequestMapping(
             value = "/getAnsweredExam",
             method = RequestMethod.GET)
@@ -110,6 +115,31 @@ public class UiController
             {
                 answer.setChosen(
                         isAnsweredAsCorrect(exam, answer));
+            }
+        }
+        return questions;
+    }
+    
+    /**
+     *
+     * @param nQuestions
+     * @return
+     */
+    @RequestMapping( value = "/getRandomQuestionsHideCorrect",
+            method = RequestMethod.GET )
+    public Object getRandomQuestionsHideCorrect( int nQuestions)
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:9005/" +
+                "getRandomQuestions?nQuestions=" + nQuestions;
+        Question[] questions = restTemplate.getForObject(
+                url,
+                Question[].class);
+        for (Question question : questions)
+        {
+            for (Answer answer : question.getAnswers())
+            {
+                answer.setCorrect(false);
             }
         }
         return questions;
