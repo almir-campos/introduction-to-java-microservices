@@ -124,7 +124,7 @@ public class ExamController
     public Object deleteExam( @RequestBody Exam exam )
     {
         Long examId = exam.getId();
-        Utils.consoleMsg( "EXAM/CONTROLLER/DELETE EXAM/EXAM ID: " + examId );
+//        Utils.consoleMsg( "EXAM/CONTROLLER/DELETE EXAM/EXAM ID: " + examId );
         return examService.deleteExam(examId);
     }
     
