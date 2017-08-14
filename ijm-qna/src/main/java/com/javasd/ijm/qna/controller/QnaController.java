@@ -5,6 +5,9 @@
  */
 package com.javasd.ijm.qna.controller;
 
+import com.javasd.ijm.commons.utils.Utils;
+import com.javasd.ijm.qna.entity.Answer;
+import com.javasd.ijm.qna.entity.Question;
 import com.javasd.ijm.qna.service.QnaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +80,17 @@ public class QnaController
             int nQuestions )
     {
         return qnaService.getRandomQuestions(nQuestions);
+    }
+    
+    @RequestMapping( value="/saveQuestion", method = RequestMethod.POST )
+    public Object saveQuestion( @RequestBody Question question )
+    {
+        Utils.consoleMsg( "SAVE QUESTION: " + question.getDescription() );
+        for ( Answer answer : question.getAnswers() )
+        {
+            answer.setQuestion(question);
+        }
+        Question savedQuestion = (Question) qnaService.saveQuestion(question);
+        return savedQuestion;
     }
 }
