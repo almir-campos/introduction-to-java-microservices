@@ -5,9 +5,15 @@
  */
 package com.javasd.ijm.exam.service;
 
+import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
+import com.javasd.ijm.exam.entity.ExamQuestion;
 import com.javasd.ijm.exam.repository.ExamRepository;
+import com.javasd.ijm.exam.repository.ExamRepositoryAux;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +29,8 @@ public class ExamService
 
     @Autowired
     private ExamRepository examRepository;
+    @Autowired
+    private ExamRepositoryAux examRepositoryAux;
 
     /**
      *
@@ -30,7 +38,7 @@ public class ExamService
      */
     public Object findAll()
     {
-        return examRepository.findAll();
+        return examRepository.findByOrderByIdDesc();
     }
 
     /**
@@ -81,4 +89,40 @@ public class ExamService
 
         return randomQuestions;
     }
+    
+    public void saveExam( List<Question> questions, String examDescription )
+    {
+        Exam exam = new Exam();
+        exam.setId(0L);
+        exam.setDescription(examDescription);
+        
+        Utils.consoleMsg(examDescription);
+
+        List<ExamQuestion> examQuestions = new ArrayList();
+        ExamQuestion examQuestion;
+        for (Question question : questions)
+        {
+            Utils.consoleMsg(question.getDescription());
+
+            examQuestion = new ExamQuestion();
+            examQuestion.setExam(exam);
+            examQuestion.setQna_question_id(question.getId());
+
+            for (Answer answer : question.getAnswers())
+            {
+                if (answer.isChosen())
+                {
+                    examQuestion.setQna_answer_id( answer.getId() );
+                    
+                    break;
+                }
+            }
+            examQuestions.add(examQuestion);
+        }
+
+        
+        exam.setExamQuestions(examQuestions);
+        examRepositoryAux.saveExam( exam );
+    }
+
 }

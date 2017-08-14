@@ -38,6 +38,10 @@ public class IjmUiApplication implements CommandLineRunner
         Utils.consoleMsg("UI Microservice up and running!");
     }
     
+    /**
+     *
+     * @return
+     */
     @Bean
     public RestTemplate restTemplate()
     {

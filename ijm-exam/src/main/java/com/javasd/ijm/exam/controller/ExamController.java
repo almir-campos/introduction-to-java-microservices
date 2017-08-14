@@ -5,10 +5,12 @@
  */
 package com.javasd.ijm.exam.controller;
 
-import com.javasd.ijm.commons.utils.Utils;
+import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.service.ExamService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,4 +99,11 @@ public class ExamController
         return examService.getRandomQuestions(nQuestions);
     }
 
+    @RequestMapping(
+            value = "/saveExam",
+            method = RequestMethod.POST)
+    public void saveExam(@RequestBody List<Question> questions, String examDescription )
+    {
+        examService.saveExam( questions , examDescription );
+    }
 }
