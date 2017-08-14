@@ -8,18 +8,24 @@ package com.javasd.ijm.ui.controller;
 import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.ui.service.UiService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author acampos
  */
 @RestController
+@EnableCircuitBreaker
 public class UiController
 {
 
@@ -122,4 +128,26 @@ public class UiController
         return uiService.updateExamDescription(examId, examDescription);
     }
 
+    @HystrixCommand(
+            fallbackMethod = "checkExamMsFallBack",
+            commandProperties =
+            {
+                @HystrixProperty(
+                        name = "execution.isolation.thread.timeoutInMilliseconds",
+                        value = "5000")
+            }
+    )
+    @RequestMapping( value = "/checkExamMs", method = RequestMethod.GET )
+    public Object checkExamMs()
+    {
+        URI uri = URI.create("http://localhost:9005");
+        RestTemplate restTemplate = new RestTemplate();
+        Object returnObject = restTemplate.getForObject(uri, String.class);
+        return "{ \"status\": \"OK\" }";
+    }
+    
+    private Object checkExamMsFallBack()
+    {
+        return "{ \"status\": \"NOK\" }";
+    }
 }
