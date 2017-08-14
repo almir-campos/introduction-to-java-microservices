@@ -6,10 +6,8 @@
 package com.javasd.ijm.exam.service;
 
 import com.javasd.ijm.commons.deo.qna.Question;
-import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.repository.ExamRepository;
-import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -81,7 +79,6 @@ public class ExamService
         Object randomQuestions = restTemplate.
                 getForObject(url, Object.class);
 
-        
         return randomQuestions;
     }
 }
