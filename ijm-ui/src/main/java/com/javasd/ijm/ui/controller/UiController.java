@@ -157,4 +157,28 @@ public class UiController
     {
         return uiService.getExamLogByExamId(examId);
     }
+    
+    @HystrixCommand(
+            fallbackMethod = "checkQnaMsFallBack",
+            commandProperties =
+            {
+                @HystrixProperty(
+                        name = "execution.isolation.thread.timeoutInMilliseconds",
+                        value = "5000")
+            }
+    )
+    @RequestMapping( value = "/checkQnaMs", method = RequestMethod.GET )
+    public Object checkQnaMs()
+    {
+        String url = "http://localhost:9018/health";
+        RestTemplate restTemplate = new RestTemplate();
+        String returnObject = restTemplate.getForObject(url, String.class);
+        Utils.consoleMsg( "QNA IS UP: " + returnObject);
+        return "{ \"status\": \"OK\" }";
+    }
+    
+    private Object checkQnaMsFallBack()
+    {
+        return "{ \"status\": \"NOK\" }";
+    }
 }
