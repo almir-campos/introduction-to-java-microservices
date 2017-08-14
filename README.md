@@ -25,7 +25,7 @@
 
 ### Application Infrastructure Overview
 
-* Five Java Microservices based on Spring Boot (we suggest run them in the following order):
+* Five Java Microservices based on Spring Boot (we suggest to run them in the following order):
   * Questions and Answers (ijm_qna)
   * Exams (ijm_exam)
   * Grader (ijm_grader)
@@ -37,6 +37,7 @@
 * MySQL Databases
   * ijm_qna (for questions and answers)
   * ijm_exam (for the exams)
+  *(Note: the script ijm-testdata.sql generates the databases and the data used in the tests so far)*
 
 * MongoDB: for the logger
 
