@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.javasd.ijm.commons.deo.qna;
+package com.javasd.ijm.commons.deo.exam;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author acampos
  */
-public class Answer implements Serializable
+public class Exam implements Serializable
 {
     private Long id;
     private String description;
-    private boolean correct;
+    private Double grade;
     private boolean deleted;
-    private boolean chosen;
+    
+    private List<ExamQuestion> examQuestions;
 
     /**
      *
@@ -59,18 +61,18 @@ public class Answer implements Serializable
      *
      * @return
      */
-    public boolean isCorrect()
+    public Double getGrade()
     {
-        return correct;
+        return grade;
     }
 
     /**
      *
-     * @param correct
+     * @param grade
      */
-    public void setCorrect(boolean correct)
+    public void setGrade(Double grade)
     {
-        this.correct = correct;
+        this.grade = grade;
     }
 
     /**
@@ -91,33 +93,40 @@ public class Answer implements Serializable
         this.deleted = deleted;
     }
 
-    public boolean isChosen()
-    {
-        return chosen;
-    }
-
-    public void setChosen(boolean chosen)
-    {
-        this.chosen = chosen;
-    }
-
     /**
      *
      * @return
      */
-//    public Question getQuestion()
-//    {
-//        return question;
-//    }
-//
-//    /**
-//     *
-//     * @param question
-//     */
-//    public void setQuestion(Question question)
-//    {
-//        this.question = question;
-//    }
+    public List<ExamQuestion> getExamQuestions()
+    {
+        return examQuestions;
+    }
+
+    /**
+     *
+     * @param examQuestions
+     */
+    public void setExamQuestions(
+                                 List<ExamQuestion> examQuestions)
+    {
+        this.examQuestions = examQuestions;
+    }
     
-    
+    /**
+     *
+     * @return
+     */
+    public Long[] getQnaQuestionIds()
+    {
+        Long[] ids = new Long[examQuestions.size()];
+
+        int i = 0;
+        for (ExamQuestion examQuestion : examQuestions)
+        {
+            ids[i] = examQuestion.getQna_question_id();
+            i++;
+        }
+        
+        return ids;
+    }
 }

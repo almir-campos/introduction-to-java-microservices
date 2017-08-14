@@ -18,6 +18,11 @@ and open the template in the editor.
   </head>
   <body class="w3-dark-grey w3-text-white">
     <div ng-app="UiApp">
+      <div class=
+           "w3-container w3-center w3-blue-grey w3-margin-bottom">
+        <h5>
+          Introduction to Java Microservices - Almir Campos, 2017</h5>
+      </div>
       <div ng-controller="UiController">
         <button class="
                 w3-btn-block
@@ -39,7 +44,8 @@ and open the template in the editor.
             <tr ng-repeat="exam in exams">
               <td>{{exam.id}}</td>
               <td>{{exam.description}}</td>
-              <td>{{exam.grade}}</td>
+              <td style="float: right; margin-right: 2em;">
+                {{exam.grade}}</td>
               <td>
                 <button class="
                         w3-btn
@@ -75,7 +81,7 @@ and open the template in the editor.
                                   });
                           // NAVIGATE TO DETAILS
                           //
-                          $scope.navToDetails = function(
+                          $scope.navToDetails = function (
                                   examId, examDescription, examGrade)
                           {
                               localStorage.setItem(
