@@ -5,6 +5,8 @@
  */
 package com.javasd.ijm.qna.repository;
 
+import com.javasd.ijm.qna.entity.Question;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -27,9 +29,9 @@ public class QnaRepositoryAux
      * @param nQuestions
      * @return
      */
-    public Object getRandomQuestions(int nQuestions)
+    public List<Question> getRandomQuestions(int nQuestions)
     {
-        Object randomQuestions = entityManager
+        List<Question> randomQuestions = entityManager
                 .createQuery(
                         "from Question q order by rand()")
                 .setMaxResults( nQuestions )

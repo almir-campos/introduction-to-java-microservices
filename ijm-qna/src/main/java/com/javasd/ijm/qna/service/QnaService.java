@@ -42,11 +42,6 @@ public class QnaService
         return qnaRepository.findAll( questionIds );
     }
     
-    /**
-     *
-     * @param nQuestions
-     * @return
-     */
     public Object getRandomQuestions(int nQuestions)
     {
         return qnaRepositoryAux

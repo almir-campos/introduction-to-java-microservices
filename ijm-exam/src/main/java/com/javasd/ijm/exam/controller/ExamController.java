@@ -5,6 +5,7 @@
  */
 package com.javasd.ijm.exam.controller;
 
+import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,13 +75,26 @@ public class ExamController
         Exam exam = (Exam) examService.findOne(examId);
         return exam.getQnaQuestionIds();
     }
-    
+
+    /**
+     *
+     * @param examId
+     * @return
+     */
     @RequestMapping(
             value = "/examQnaQuestions",
             method = RequestMethod.GET)
     public Object examQnaQuestions(Long examId)
     {
         return examService.examQnaQuestions(examId);
+    }
+
+    @RequestMapping(
+            value = "/getRandomQuestions",
+            method = RequestMethod.GET)
+    public Object getRandomQuestions(Integer nQuestions)
+    {
+        return examService.getRandomQuestions(nQuestions);
     }
 
 }
