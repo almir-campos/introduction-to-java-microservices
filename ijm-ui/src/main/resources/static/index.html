@@ -11,11 +11,34 @@ and open the template in the editor.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script 
     src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <!--STYLES-->
+    <link
+        rel="stylesheet"
+        href="http://www.w3schools.com/lib/w3.css" />
   </head>
-  <body>
+  <body class="w3-dark-grey w3-text-white">
     <div ng-app="UiApp">
       <div ng-controller="UiController">
-        <pre>{{exams | json}}</pre>
+        <button>Take an Exam</button>
+        <table class="w3-table-all w3-large">
+          <thead>
+            <tr class="w3-green">
+              <th>ID</th>
+              <th>DESCRIPTION</th>
+              <th>GRADE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody class="w3-text-black">
+            <tr ng-repeat="exam in exams">
+              <td>{{exam.id}}</td>
+              <td>{{exam.description}}</td>
+              <td>{{exam.grade}}</td>
+              <td>[Details], [Delete]</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--<pre>{{exams | json}}</pre>-->
       </div>
     </div>
     <script>
