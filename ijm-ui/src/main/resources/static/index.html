@@ -48,7 +48,8 @@ and open the template in the editor.
                         w3-margin-bottom"
                         ng-click="navToDetails(
                                               exam.id,
-                                              exam.description)">
+                                              exam.description,
+                                              exam.grade)">
                   Details
                 </button>
                 [Delete]</td>
@@ -75,13 +76,16 @@ and open the template in the editor.
                           // NAVIGATE TO DETAILS
                           //
                           $scope.navToDetails = function(
-                                  examId, examDescription)
+                                  examId, examDescription, examGrade)
                           {
                               localStorage.setItem(
                                       "examId", examId);
                               localStorage.setItem(
                                       "examDescription",
                                       examDescription);
+                              localStorage.setItem(
+                                      "examGrade",
+                                      examGrade);
                               window.location.href =
                                       "details.html";
                           }
