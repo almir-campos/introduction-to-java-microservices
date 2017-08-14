@@ -30,4 +30,18 @@ public class UiController
                 Object.class);
         return exams;
     }
+    
+    @RequestMapping(
+            value = "/examQnaQuestions",
+            method = RequestMethod.GET)
+    public Object examQnaQuestions(Long examId )
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:9005/" +
+                "examQnaQuestions?examId=" + examId;
+        Object questions = restTemplate.getForObject(
+                url,
+                Object.class);
+        return questions;
+    }
 }
