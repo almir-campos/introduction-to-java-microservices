@@ -50,7 +50,12 @@
         </div>
 
         <!--QUESTION AND ANSWERS-->
-        <div ng-repeat="question in questions">
+        <div ng-hide="qnaIsAvailable" class="w3-center">
+          Sorry. The Questions & Answers are not available at this time.Please, try later.
+          <br />
+          <br />
+        </div>
+        <div ng-show="qnaIsAvailable" ng-repeat="question in questions">
 
           <!--QUESTION STATEMENT-->
           <div class="w3-container w3-grey" style="width: 100%;">
@@ -84,7 +89,7 @@
 
         <!--DELETE EXAM BUTTON-->
         <button 
-            ng-hide="{{ examDeleted }}"
+            ng-hide="{{ examDeleted}}"
             class="
             w3-btn-block
             w3-teal 
@@ -133,22 +138,35 @@
                         .getItem("examGrade");
                 $scope.examDeleted = localStorage
                         .getItem("examDeleted");
-                
+
+
                 console.log(
                         $scope.examId,
                         $scope.examDescription,
                         $scope.examGrade,
                         $scope.examDeleted);
-                // GET ANSWERED EXAM
+                // CHECK IS QNA IS AVAILABLE
                 //
-                var url = "/getAnsweredExam?examId=" +
-                        $scope.examId;
-                $http.get(url)
+                $scope.qnaIsAvailable = true;
+                $http.get("/checkQnaMs")
                         .then(function (response)
                         {
-                            $scope.questions = response.data;
+                            console.log("RESPONSE.DATA: " + response.data.status);
+                            $scope.qnaIsAvailable = response.data.status === "OK";
+                            console.log("QNS IS AVAILABLE: " + $scope.qnaIsAvailable);
                         });
-                        
+                // GET ANSWERED EXAM
+                //
+                if ($scope.qnaIsAvailable)
+                {
+                    var url = "/getAnsweredExam?examId=" +
+                            $scope.examId;
+                    $http.get(url)
+                            .then(function (response)
+                            {
+                                $scope.questions = response.data;
+                            });
+                }
                 // GET EXAM LOG
                 //
                 var url = "/getExamLogByExamId?examId=" +
@@ -158,7 +176,7 @@
                         {
                             $scope.examLog = response.data;
                         });
-                        
+
                 // SET ANSWER'S COLOR
                 //
                 $scope.answerColor = function (answer)
@@ -171,15 +189,15 @@
                         return 'w3-text-green';
                     }
                 };
-                
+
                 // NAVIGATE TO EXAM LIST
                 //
                 $scope.examList = function ()
                 {
                     window.location.href = "index.html";
                 };
-                
-                
+
+
                 // DELETE AN EXAM
                 //
                 $scope.deleteExam = function ()
