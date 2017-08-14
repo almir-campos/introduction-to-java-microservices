@@ -19,6 +19,7 @@ public class QnaService
     @Autowired
     private QnaRepository qnaRepository;
     
+    
     /**
      *
      * @return
@@ -37,4 +38,5 @@ public class QnaService
     {
         return qnaRepository.findAll( questionIds );
     }
+    
 }

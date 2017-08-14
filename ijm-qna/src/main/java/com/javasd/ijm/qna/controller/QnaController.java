@@ -64,4 +64,5 @@ public class QnaController
     {
         return qnaService.findAll(questionIds);
     }
+    
 }
