@@ -21,11 +21,15 @@
   <body>
     <div>
       <div ng-app="StudyApp">
-        <div ng-controller="StudyController" ng-init="examIsAlive = false">
+        <div ng-controller="StudyController">
+             <!--ng-init="examIsAlive = false">-->
           <div id="examIsAliveDiv"></div>
           <div>
-            Sorry... The Exam list isn't availabe.<br /> How about studying
-            while you wait? <br /> <br /> 1 + 1 = 2<br /> 2 + 2 = 4<br />
+            <!--*{{examIsAlive}}*<br />-->
+            <div ng-hide="examIsAlive">
+              Sorry... The Exam list isn't availabe.<br /> How about studying while you wait?
+            </div>
+            1 + 1 = 2<br /> 2 + 2 = 4<br />
           </div>
         </div>
       </div>
@@ -34,14 +38,19 @@
       angular.module("StudyApp", []).controller(
               'StudyController',
               function ($scope, $http) {
-
+                
+                  // SHOW OR HIDE THE 'SORRY' MESSAGE
+                  //
+                  $scope.examIsAlive = localStorage.getItem("examIsAlive") === "true";
+                  console.log( 'EXAM IS ALIVE: ', localStorage.getItem("examIsAlive") );
+                  
                   //Configuring the WebSocket
                   //
 
                   // Connect the client to the socket
                   //
                   var socket = null;
-                ;
+                  ;
                   // Create the client
                   //
                   var stompClient = null;

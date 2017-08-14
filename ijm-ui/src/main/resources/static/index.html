@@ -40,6 +40,15 @@ and open the template in the editor.
             w3-margin-bottom">
           Take an Exam
         </button>
+        <button
+            ng-click="navToStudy()"
+            class="
+            w3-btn-block
+            w3-teal
+            w3-large
+            w3-margin-bottom">
+          Study
+        </button>
         <div id="examGradeFromWebSocket" style="float: right; background: red; color: white;"></div>
         <table class="w3-table-all w3-large">
           <thead>
@@ -86,19 +95,21 @@ and open the template in the editor.
                                       console.log("CHECK EXAM MS: " + response.data.status);
                                       if (response.data.status === "NOK")
                                       {
+                                          localStorage.setItem("examIsAlive", "false");
                                           window.location.href = "/study.html";
                                       } else
                                       {
                                           console.log(
                                                   "UI Controller up!");
+                                          localStorage.setItem("examIsAlive", "true");
                                           $http.get("/findAll")
                                                   .then(function (response)
                                                   {
                                                       $scope.exams =
                                                               response.data;
                                                   });
-                                                  
-                                                  
+
+
                                           // NAVIGATE TO DETAILS
                                           //
                                           $scope.navToDetails = function (
@@ -115,8 +126,8 @@ and open the template in the editor.
                                               window.location.href =
                                                       "details.html";
                                           };
-                                          
-                                          
+
+
                                           // NAVIGATE TO TAKE AN EXAM
                                           //
                                           $scope.navToTakeAnExam = function ()
@@ -124,8 +135,17 @@ and open the template in the editor.
                                               window.location.href =
                                                       "take.html";
                                           };
-                                          
-                                          
+
+
+                                          // NAVIGATE TO TAKE AN EXAM
+                                          //
+                                          $scope.navToStudy = function ()
+                                          {
+                                              window.location.href =
+                                                      "study.html";
+                                          };
+
+
                                           //
                                           //
                                           var socket = new SockJS("/uiWebSocket");
