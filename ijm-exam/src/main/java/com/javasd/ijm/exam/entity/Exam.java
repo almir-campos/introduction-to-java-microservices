@@ -5,6 +5,7 @@
  */
 package com.javasd.ijm.exam.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -127,6 +128,7 @@ public class Exam implements Serializable
      *
      * @return
      */
+    @JsonIgnore
     public Long[] getQnaQuestionIds()
     {
         Long[] ids = new Long[examQuestions.size()];

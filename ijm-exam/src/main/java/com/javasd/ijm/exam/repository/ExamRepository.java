@@ -18,5 +18,11 @@ import org.springframework.data.repository.CrudRepository;
 public interface ExamRepository
         extends CrudRepository<Exam, Long>
 {
+
+    /**
+     *
+     * @return
+     */
     List<Exam> findByOrderByIdDesc();
+    List<Exam> findByDeletedFalseOrderByIdDesc();
 }
