@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -26,6 +27,8 @@ public class Answer implements Serializable
     private String description;
     private boolean correct;
     private boolean deleted;
+    @Transient
+    private boolean chosen;
     
     @ManyToOne
     @JoinColumn( name = "question_id" )
@@ -121,6 +124,17 @@ public class Answer implements Serializable
     {
         this.question = question;
     }
+
+    public boolean isChosen()
+    {
+        return chosen;
+    }
+
+    public void setChosen(boolean chosen)
+    {
+        this.chosen = chosen;
+    }
+    
     
     
 }
