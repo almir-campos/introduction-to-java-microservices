@@ -91,6 +91,12 @@
             <artifactId>spring-rabbit</artifactId>
             <type>jar</type>
         </dependency>
+        <!--EMAIL-->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-mail</artifactId>
+        <version>1.4.2.RELEASE</version>
+    </dependency>
     </dependencies>
 
     <build>

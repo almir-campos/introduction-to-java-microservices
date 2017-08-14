@@ -1,9 +1,12 @@
 package com.javasd.ijm.exam;
 
 import com.javasd.ijm.commons.utils.Utils;
+import com.javasd.ijm.exam.email.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -12,10 +15,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
+@EnableAsync
 public class IjmExamApplication
         implements CommandLineRunner
 {
 
+    @Autowired
+    private EmailService emailService;
+    
     /**
      *
      * @param args
