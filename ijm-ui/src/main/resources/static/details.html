@@ -30,7 +30,17 @@
         <div class=
              "w3-container w3-center w3-blue-grey w3-text-black w3-margin-bottom">
           <h3>
-            <strong>{{examDescription}}</strong> (Exam ID: {{examId}})
+            <strong>
+              <input
+                  value="{{examDescription}}"
+                  ng-model="examDescription"/>
+
+              <button
+                  class ="w3-btn w3-teal"
+                  ng-click="updateExamDescription()">
+                Ok
+              </button>
+            </strong> (Exam ID: {{examId}})
           </h3>
         </div>
         <div ng-repeat="question in questions">
@@ -85,7 +95,6 @@
                         .getItem("examDescription");
                 $scope.examGrade = localStorage
                         .getItem("examGrade");
-
                 console.log(
                         $scope.examId,
                         $scope.examDescription,
@@ -113,17 +122,34 @@
                 };
                 //
                 //
-                $scope.examList = function () {
+                $scope.examList = function ()
+                {
                     window.location.href = "index.html";
                 };
                 //
                 //
                 $scope.deleteExam = function ()
                 {
-                    if (confirm("Click OK to delete the exam '"+ $scope.examDescription + "' [id: " + $scope.examId +"]'"))
+                    if (confirm("Click OK to delete the exam '" + $scope.examDescription + "' [id: " + $scope.examId + "]'"))
                     {
                         var deleteExamUrl = "/deleteExam?examId=" + $scope.examId;
                         $http.post(deleteExamUrl)
+                                .then(function (response)
+                                {
+                                    window.location.href = "index.html";
+                                });
+                    }
+                };
+                //
+                //
+                $scope.updateExamDescription = function ()
+                {
+                    if (confirm("Click OK to update the description to '" + $scope.examDescription + "' [id: " + $scope.examId + "]'"))
+                    {
+                        var updateExamDescriptionUrl = "/updateExamDescription"
+                                + "?examId=" + $scope.examId
+                                + "&examDescription=" + $scope.examDescription;
+                        $http.post(updateExamDescriptionUrl)
                                 .then(function (response)
                                 {
                                     window.location.href = "index.html";
