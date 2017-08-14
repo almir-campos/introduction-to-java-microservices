@@ -5,14 +5,83 @@
     <title>TODO supply a title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
+
+    </script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js">
+
+    </script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
+
+    </script>
   </head>
   <body>
     <div>
-      <div>
-        Sorry... The Exam list isn't availabe.<br /> How about studying
-        while you wait? <br /> <br /> 1 + 1 = 2<br /> 2 + 2 = 4<br />
+      <div ng-app="StudyApp">
+        <div ng-controller="StudyController" ng-init="examIsAlive = false">
+          <div id="examIsAliveDiv"></div>
+          <div>
+            Sorry... The Exam list isn't availabe.<br /> How about studying
+            while you wait? <br /> <br /> 1 + 1 = 2<br /> 2 + 2 = 4<br />
+          </div>
+        </div>
       </div>
     </div>
+    <script>
+      angular.module("StudyApp", []).controller(
+              'StudyController',
+              function ($scope, $http) {
 
+                  //Configuring the WebSocket
+                  //
+
+                  // Connect the client to the socket
+                  //
+                  var socket = null;
+                ;
+                  // Create the client
+                  //
+                  var stompClient = null;
+
+                  function stompConnect()
+                  {
+                      console.log("Tentando conectar...");
+                      socket = new SockJS("/uiWebSocket");
+                      // Create the client
+                      //
+                      stompClient = Stomp.over(socket);
+                      stompClient.connect({},
+                              stompSuccessCallback,
+                              stompFailureCallback);
+                  }
+                  stompConnect();
+
+                  function stompFailureCallback(error)
+                  {
+                      //stompClient.disconnect(function () {});
+                      console.log("FAIO!!! " + error);
+                      setTimeout(stompConnect, 1000);
+
+                  }
+
+                  function stompSuccessCallback()
+                  {
+                      // Subsbribe to MessageBroker/path
+                      stompClient.subscribe("/uiMessageBroker/sendExamAliveToFrontEnd",
+                              function (webSocketData)
+                              {
+                                  if (confirm("The Exam Service is Back.\n\n\
+                                 Do you want to come back to the Exam List?"))
+                                  {
+                                      window.location.href = "/index.html";
+                                  }
+                              });
+
+                  }
+              });
+    </script>
   </body>
 </html>

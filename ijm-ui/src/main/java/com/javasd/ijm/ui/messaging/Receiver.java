@@ -46,5 +46,26 @@ public class Receiver
                 "/uiMessageBroker/sendExamGradeToFrontEnd", objects);
 
     }
-
+    
+    @Bean
+    public Queue examToUiExamAliveQ()
+    {
+        return new Queue( "examToUiExamAliveQ", false );
+    }
+    
+    @RabbitListener( queues = "examToUiExamAliveQ")
+    public void receiveFromExamToUiExamAliveQ( String message )
+    {
+       Utils.consoleMsg("UI/receiveFromExamToUiExamAliveQ", message );
+//        try
+//        {
+//            Thread.sleep( 10000 );
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+        simpMessagingTemplate.convertAndSend(
+                "/uiMessageBroker/sendExamAliveToFrontEnd", message );
+    }
 }
