@@ -6,6 +6,7 @@
 package com.javasd.ijm.exam.messaging;
 
 import com.javasd.ijm.commons.utils.Utils;
+import com.javasd.ijm.exam.email.EmailService;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.service.ExamService;
 import org.springframework.amqp.core.Queue;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Receiver
 {
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private ExamService examService;
@@ -53,7 +57,11 @@ public class Receiver
                 ", GRADE: " + grade);
 
         Exam updatedExam = (Exam) examService.updateExamGrade(examId, grade);
-        
-        sender.sendToExamToUiGradedExamQ(examId, grade );
+
+        sender.sendToExamToUiGradedExamQ(examId, grade);
+        String subject = "Exam " + examId + " graded!";
+        String text    = "The exam " + examId +
+                " was graded and received the grade " + grade;
+        emailService.sendMail( subject, text );
     }
 }
