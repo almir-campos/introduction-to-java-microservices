@@ -39,9 +39,9 @@ public class UiController
     @RequestMapping(
             value = "/findAll",
             method = RequestMethod.GET)
-    public Object findAll()
+    public Object findAll(Boolean includeDeleted )
     {
-        return uiService.findAll();
+        return uiService.findAll(includeDeleted);
     }
 
     /**
