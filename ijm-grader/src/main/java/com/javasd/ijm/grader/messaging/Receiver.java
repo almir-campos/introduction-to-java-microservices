@@ -7,6 +7,8 @@ package com.javasd.ijm.grader.messaging;
 
 import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
+import com.javasd.ijm.grader.service.GradeCalculator;
+import com.javasd.ijm.grader.service.GraderService;
 import java.util.List;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -23,6 +25,9 @@ public class Receiver
 {
     @Autowired
     private Sender sender;
+    
+    @Autowired
+    private GraderService graderService;
 
     @Bean
     public Queue examToGraderGradeRequestQ()
@@ -34,16 +39,22 @@ public class Receiver
     public void receiveFromExamToGraderGradeRequestQ(Object[] objects)
     {
         Long examId = (Long) objects[0];
-        List<Question> questions = (List<Question>) objects[1];
+        List<Question> answeredQuestions = (List<Question>) objects[1];
         
         Utils.consoleMsg("GRADER/RECEIVER/EXAM ID: " + examId);
         
-        for (Question question : questions)
+        for (Question question : answeredQuestions)
         {
             Utils.consoleMsg("GRADER/RECEIVER/QUESTION: " + question.getDescription());
         }
         
-        double grade = -1.0;
+        List<Question> originalQuestions = graderService.findOriginalQuestions(answeredQuestions);
+        
+        GradeCalculator gradeCalculator = new GradeCalculator( 
+                answeredQuestions,
+                originalQuestions);
+        
+        double grade = gradeCalculator.calcGrade();
         
         sender.sendToGraderToExamGradeResponseQ( examId, grade );
     }

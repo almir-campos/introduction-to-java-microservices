@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
  */
 public class Utils
 {
+    private static int msgNumber = 0;
 
     /**
      *
@@ -50,7 +51,7 @@ public class Utils
         }
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "MMM dd,yyyy HH:mm:ss.SSS");
-
+        
         System.out.println(
                 "\n" +
                 "\033" +
