@@ -9,6 +9,11 @@ import com.javasd.ijm.commons.deo.exam.Exam;
 import com.javasd.ijm.commons.deo.exam.ExamQuestion;
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
+import java.util.Arrays;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,8 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class UiController
 {
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      *
@@ -31,7 +38,6 @@ public class UiController
             method = RequestMethod.GET)
     public Object findAll()
     {
-        RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9005/findAll";
         Object exams = restTemplate.getForObject(
                 url,
@@ -49,7 +55,6 @@ public class UiController
             method = RequestMethod.GET)
     public Object examQnaQuestions(Long examId)
     {
-        RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9005/" +
                 "examQnaQuestions?examId=" + examId;
         Object questions = restTemplate.getForObject(
@@ -68,7 +73,6 @@ public class UiController
             method = RequestMethod.GET)
     public Object examQnaQuestionsHideCorrect(Long examId)
     {
-        RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9005/" +
                 "examQnaQuestions?examId=" + examId;
         Question[] questions = restTemplate.getForObject(
@@ -94,8 +98,6 @@ public class UiController
             method = RequestMethod.GET)
     public Object getAnsweredExam(Long examId)
     {
-        RestTemplate restTemplate = new RestTemplate();
-
         String url = "http://localhost:9005/" +
                 "findOne?examId=" + examId;
 
@@ -129,7 +131,6 @@ public class UiController
             method = RequestMethod.GET )
     public Object getRandomQuestionsHideCorrect( int nQuestions)
     {
-        RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9005/" +
                 "getRandomQuestions?nQuestions=" + nQuestions;
         Question[] questions = restTemplate.getForObject(
@@ -144,7 +145,21 @@ public class UiController
         }
         return questions;
     }
+    
+    
+    @RequestMapping( value = "/saveExam",
+            method = RequestMethod.POST )
+    public void saveExam ( @RequestBody List<Question> questions, String examDescription )
+    {
+        Utils.consoleMsg( examDescription );
+        for ( Question question : questions )
+        {
+            Utils.consoleMsg( question.getDescription() );
+        }
+    }
 
+    //
+    //
     private boolean isAnsweredAsCorrect(Exam exam,
                                         Answer answer)
     {
