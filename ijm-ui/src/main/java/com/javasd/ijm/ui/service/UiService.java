@@ -7,6 +7,7 @@ package com.javasd.ijm.ui.service;
 
 import com.javasd.ijm.commons.deo.exam.Exam;
 import com.javasd.ijm.commons.deo.exam.ExamQuestion;
+import com.javasd.ijm.commons.deo.logger.ExamLog;
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
@@ -29,6 +30,7 @@ public class UiService
 
     /**
      *
+     * @param includeDeleted
      * @return
      */
     public Object findAll( Boolean includeDeleted )
@@ -176,6 +178,15 @@ public class UiService
                 examToUpdate,
                 Exam.class );
     }
+    
+    public Object getExamLogByExamId( Long examId )
+    {
+        String url = "http://localhost:9012/findByExamId?examId=" + examId;
+        ExamLog examLog = restTemplate.getForObject(url, ExamLog.class );
+        return examLog;
+        
+    }
+    
     //
     //
     private boolean isAnsweredAsCorrect(Exam exam,
