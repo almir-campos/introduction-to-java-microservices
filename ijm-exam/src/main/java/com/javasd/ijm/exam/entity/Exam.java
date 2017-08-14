@@ -134,7 +134,7 @@ public class Exam implements Serializable
         int i = 0;
         for (ExamQuestion examQuestion : examQuestions)
         {
-            ids[i] = examQuestion.getQna_answer_id();
+            ids[i] = examQuestion.getQna_question_id();
             i++;
         }
         
