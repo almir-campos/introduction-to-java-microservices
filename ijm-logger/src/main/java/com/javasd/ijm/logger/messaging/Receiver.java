@@ -64,4 +64,21 @@ public class Receiver
         ExamLog savedExamLog = (ExamLog) loggerService.save(examLog);
         Utils.consoleMsg("===>>> LOADED ID: " +  savedExamLog.getId());
     }
+    
+    @Bean
+    public Queue examToLoggerDeleteExamQ()
+    {
+        return new Queue("examToLoggerDeleteExamQ", false );
+    }
+    
+    @RabbitListener( queues = "examToLoggerDeleteExamQ")
+    public void receiveFromExamToLoggerDeleteExamQ( Long examId )
+    {
+        Utils.consoleMsg( "EXAM/LOGGER/RECEIVE FROM EXAM - DELETE EXAM /EXAM ID: " + examId );
+        ExamLog examLog = (ExamLog) loggerService.findByExamId(examId);
+        examLog.setDateDeleted( new Date() );
+        ExamLog savedExam = (ExamLog) loggerService.save(examLog);
+        Utils.consoleMsg( "===> DATE DELETED: " + savedExam.getDateDeleted() );
+        
+    }
 }

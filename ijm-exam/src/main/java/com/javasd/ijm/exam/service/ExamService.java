@@ -7,7 +7,6 @@ package com.javasd.ijm.exam.service;
 
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
-import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.entity.ExamQuestion;
 import com.javasd.ijm.exam.messaging.Sender;
@@ -151,7 +150,9 @@ public class ExamService
     {
         Exam examToDelete = examRepository.findOne(examId);
         examToDelete.setDeleted(true);
-        return examRepository.save(examToDelete);
+        Object savedExam = examRepository.save(examToDelete);
+        sender.sendToExamToLoggerDeleteExamQ(examId);
+        return savedExam;
     }
 
     /**
