@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
  */
 public class Utils
 {
-    private static int msgNumber = 0;
 
     /**
      *

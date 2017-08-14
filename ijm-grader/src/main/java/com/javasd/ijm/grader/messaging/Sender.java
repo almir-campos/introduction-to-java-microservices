@@ -5,9 +5,7 @@
  */
 package com.javasd.ijm.grader.messaging;
 
-import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
-import java.util.List;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +33,17 @@ public class Sender
         Utils.consoleMsg( "GRADER/SENDER/EXAM ID: " + examId + ", GRADE: " + grade );
         
         rmTemplate.convertAndSend( "graderToExamGradeResponseQ", new Object[]{ examId, grade } );
+    }
+    
+    @Bean
+    public Queue graderToLoggerRequestQ()
+    {
+        return new Queue ("graderToLoggerRequestQ", false);
+    }
+    
+    public void sendToGraderToLoggerRequestQ( Long examId, Double grade )
+    {
+        Utils.consoleMsg("GRADER/SEND TO LOGGER/EXAM ID: " + examId + ", GRADE: " + grade );
+        rmTemplate.convertAndSend( "graderToLoggerRequestQ", new Object[] { examId, grade } );
     }
 }
