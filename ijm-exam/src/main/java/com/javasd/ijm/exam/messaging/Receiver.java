@@ -5,11 +5,12 @@
  */
 package com.javasd.ijm.exam.messaging;
 
-import com.javasd.ijm.commons.deo.qna.Question;
 import com.javasd.ijm.commons.utils.Utils;
-import java.util.List;
+import com.javasd.ijm.exam.entity.Exam;
+import com.javasd.ijm.exam.service.ExamService;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Receiver
 {
+    @Autowired
+    private ExamService examService;
 
     @Bean
     public Queue graderToExamGradeResponseQ()
@@ -34,6 +37,8 @@ public class Receiver
         Double grade = (Double) objects[1];
         
         Utils.consoleMsg("EXAM/RECEIVER/EXAM ID: " + examId + ", GRADE: " + grade );
+        
+        Exam updatedExam = (Exam) examService.updateExamGrade(examId, grade );
         
     }
 }

@@ -89,9 +89,6 @@ public class ExamService
                 = "http://localhost:9017/getRandomQuestions" +
                 "?nQuestions=" + nQuestions;
 
-//        ResponseEntity<Question[]> randomQuestions
-//                = restTemplate.getForEntity(url,
-//                        Question[].class);
         Object randomQuestions = restTemplate.
                 getForObject(url, Object.class);
 
@@ -152,6 +149,13 @@ public class ExamService
         Exam examToDelete = examRepository.findOne(examId);
         examToDelete.setDescription(examDescription);
         return examRepository.save( examToDelete );
+    }
+    
+    public Object updateExamGrade( Long examId, Double grade )
+    {
+        Exam loadedExam = (Exam) findOne(examId);
+        loadedExam.setGrade(grade);
+        return examRepository.save( loadedExam );
     }
 
 }
