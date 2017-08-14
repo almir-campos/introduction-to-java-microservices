@@ -6,6 +6,7 @@
 package com.javasd.ijm.qna.service;
 
 import com.javasd.ijm.qna.repository.QnaRepository;
+import com.javasd.ijm.qna.repository.QnaRepositoryAux;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class QnaService
     @Autowired
     private QnaRepository qnaRepository;
     
+    @Autowired
+    private QnaRepositoryAux qnaRepositoryAux;
     
     /**
      *
@@ -39,4 +42,14 @@ public class QnaService
         return qnaRepository.findAll( questionIds );
     }
     
+    /**
+     *
+     * @param nQuestions
+     * @return
+     */
+    public Object getRandomQuestions(int nQuestions)
+    {
+        return qnaRepositoryAux
+                .getRandomQuestions( nQuestions );
+    }
 }
