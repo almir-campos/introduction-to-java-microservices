@@ -6,7 +6,6 @@
 package com.javasd.ijm.exam.controller;
 
 import com.javasd.ijm.commons.deo.qna.Question;
-import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.service.ExamService;
 import java.util.List;
@@ -42,14 +41,15 @@ public class ExamController
 
     /**
      *
+     * @param includeDeleted
      * @return
      */
     @RequestMapping(
             value = "/findAll",
             method = RequestMethod.GET)
-    public Object findAll()
+    public Object findAll(Boolean includeDeleted )
     {
-        return examService.findAll();
+        return examService.findAll( includeDeleted );
     }
 
     /**

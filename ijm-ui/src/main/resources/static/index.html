@@ -49,6 +49,15 @@ and open the template in the editor.
             w3-margin-bottom">
           Study
         </button>
+        <button
+            ng-click="showHideDeleted()"
+            class="
+            w3-btn-block
+            w3-teal
+            w3-large
+            w3-margin-bottom">
+            {{showDeleted ? "Hide Deleted" : "Show Deleted"}}
+        </button>
         <div id="examGradeFromWebSocket" style="float: right; background: red; color: white;"></div>
         <table class="w3-table-all w3-large">
           <thead>
@@ -61,7 +70,7 @@ and open the template in the editor.
           </thead>
           <tbody class="w3-text-black">
             <tr ng-repeat="exam in exams">
-              <td>{{exam.id}}</td>
+              <td>{{exam.id}}{{exam.deleted ? "[D]" : ""}}</td>
               <td>{{exam.description}}</td>
               <td style="float: right; margin-right: 2em;">
                 {{exam.grade| number: 2}}</td>
@@ -74,7 +83,8 @@ and open the template in the editor.
                         ng-click="navToDetails(
                                               exam.id,
                                               exam.description,
-                                              exam.grade)">
+                                              exam.grade,
+                                              exam.deleted)">
                   Details
                 </button>
               </td>
@@ -102,18 +112,32 @@ and open the template in the editor.
                                           console.log(
                                                   "UI Controller up!");
                                           localStorage.setItem("examIsAlive", "true");
-                                          $http.get("/findAll")
+                                          
+                                          // SHOW/HIDE DELETED
+                                          //
+                                          $scope.showDeleted = false;
+                                          $scope.showHideDeleted = function()
+                                          {
+                                              $scope.showDeleted = !$scope.showDeleted;
+                                              findAll();
+                                          };
+                                          
+                                          function findAll()
+                                          {
+                                             $http.get("/findAll?includeDeleted=" + $scope.showDeleted )
                                                   .then(function (response)
                                                   {
                                                       $scope.exams =
                                                               response.data;
                                                   });
-
+                                          }
+                                          
+                                          findAll();
 
                                           // NAVIGATE TO DETAILS
                                           //
                                           $scope.navToDetails = function (
-                                                  examId, examDescription, examGrade)
+                                                  examId, examDescription, examGrade, examDeleted)
                                           {
                                               localStorage.setItem(
                                                       "examId", examId);
@@ -123,6 +147,10 @@ and open the template in the editor.
                                               localStorage.setItem(
                                                       "examGrade",
                                                       examGrade);
+                                              localStorage.setItem(
+                                                      "examDeleted",
+                                                      examDeleted);
+                                                     
                                               window.location.href =
                                                       "details.html";
                                           };
