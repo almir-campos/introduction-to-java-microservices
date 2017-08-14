@@ -14,5 +14,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface LoggerRepository extends CrudRepository<ExamLog, String>
 {
-    
+    ExamLog findByExamId( Long examId );
 }
