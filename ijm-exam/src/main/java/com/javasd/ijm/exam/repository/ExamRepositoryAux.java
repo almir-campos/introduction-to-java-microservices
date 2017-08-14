@@ -6,17 +6,24 @@
 package com.javasd.ijm.exam.repository;
 
 import com.javasd.ijm.exam.entity.Exam;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author acampos
  */
+@Repository
 @Transactional
-public interface ExamRepository
-        extends CrudRepository<Exam, Long>
+public class ExamRepositoryAux
 {
-    List<Exam> findByOrderByIdDesc();
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    public Exam saveExam( Exam exam )
+    {
+        return (Exam) entityManager.merge( exam );
+    }
 }

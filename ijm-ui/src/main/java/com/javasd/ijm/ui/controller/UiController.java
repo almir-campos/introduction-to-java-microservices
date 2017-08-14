@@ -5,19 +5,14 @@
  */
 package com.javasd.ijm.ui.controller;
 
-import com.javasd.ijm.commons.deo.exam.Exam;
-import com.javasd.ijm.commons.deo.exam.ExamQuestion;
-import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
-import com.javasd.ijm.commons.utils.Utils;
-import java.util.Arrays;
+import com.javasd.ijm.ui.service.UiService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -26,8 +21,9 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class UiController
 {
+
     @Autowired
-    private RestTemplate restTemplate;
+    private UiService uiService;
 
     /**
      *
@@ -38,11 +34,7 @@ public class UiController
             method = RequestMethod.GET)
     public Object findAll()
     {
-        String url = "http://localhost:9005/findAll";
-        Object exams = restTemplate.getForObject(
-                url,
-                Object.class);
-        return exams;
+        return uiService.findAll();
     }
 
     /**
@@ -55,12 +47,7 @@ public class UiController
             method = RequestMethod.GET)
     public Object examQnaQuestions(Long examId)
     {
-        String url = "http://localhost:9005/" +
-                "examQnaQuestions?examId=" + examId;
-        Object questions = restTemplate.getForObject(
-                url,
-                Object.class);
-        return questions;
+        return uiService.examQnaQuestions(examId);
     }
 
     /**
@@ -73,19 +60,7 @@ public class UiController
             method = RequestMethod.GET)
     public Object examQnaQuestionsHideCorrect(Long examId)
     {
-        String url = "http://localhost:9005/" +
-                "examQnaQuestions?examId=" + examId;
-        Question[] questions = restTemplate.getForObject(
-                url,
-                Question[].class);
-        for (Question question : questions)
-        {
-            for (Answer answer : question.getAnswers())
-            {
-                answer.setCorrect(false);
-            }
-        }
-        return questions;
+        return uiService.examQnaQuestionsHideCorrect(examId);
     }
 
     /**
@@ -98,82 +73,34 @@ public class UiController
             method = RequestMethod.GET)
     public Object getAnsweredExam(Long examId)
     {
-        String url = "http://localhost:9005/" +
-                "findOne?examId=" + examId;
-
-        Exam exam = restTemplate.getForObject(
-                url,
-                Exam.class
-        );
-
-        url = "http://localhost:9005/" +
-                "examQnaQuestions?examId=" + examId;
-        Question[] questions = restTemplate.getForObject(
-                url,
-                Question[].class);
-        for (Question question : questions)
-        {
-            for (Answer answer : question.getAnswers())
-            {
-                answer.setChosen(
-                        isAnsweredAsCorrect(exam, answer));
-            }
-        }
-        return questions;
+        return uiService.getAnsweredExam(examId);
     }
-    
+
     /**
      *
      * @param nQuestions
      * @return
      */
-    @RequestMapping( value = "/getRandomQuestionsHideCorrect",
-            method = RequestMethod.GET )
-    public Object getRandomQuestionsHideCorrect( int nQuestions)
+    @RequestMapping(value = "/getRandomQuestionsHideCorrect",
+            method = RequestMethod.GET)
+    public Object getRandomQuestionsHideCorrect(int nQuestions)
     {
-        String url = "http://localhost:9005/" +
-                "getRandomQuestions?nQuestions=" + nQuestions;
-        Question[] questions = restTemplate.getForObject(
-                url,
-                Question[].class);
-        for (Question question : questions)
-        {
-            for (Answer answer : question.getAnswers())
-            {
-                answer.setCorrect(false);
-            }
-        }
-        return questions;
-    }
-    
-    
-    @RequestMapping( value = "/saveExam",
-            method = RequestMethod.POST )
-    public void saveExam ( @RequestBody List<Question> questions, String examDescription )
-    {
-        Utils.consoleMsg( examDescription );
-        for ( Question question : questions )
-        {
-            Utils.consoleMsg( question.getDescription() );
-        }
+        return uiService.getRandomQuestionsHideCorrect(nQuestions);
     }
 
-    //
-    //
-    private boolean isAnsweredAsCorrect(Exam exam,
-                                        Answer answer)
+    /**
+     *
+     * @param questions
+     * @param examDescription
+     */
+    @RequestMapping(value = "/saveExam",
+            method = RequestMethod.POST)
+    public void saveExam(
+            @RequestBody List<Question> questions,
+            String examDescription)
     {
-        for (ExamQuestion examQuestion : exam.
-                getExamQuestions())
-        {
-            if (examQuestion
-                    .getQna_answer_id()
-                    .longValue() == answer.getId().
-                            longValue())
-            {
-                return true;
-            }
-        }
-        return false;
+        uiService.saveExam(questions, examDescription);
+
     }
+
 }
