@@ -21,26 +21,39 @@ import org.springframework.stereotype.Component;
 @Component
 public class Receiver
 {
+
     @Autowired
     private ExamService examService;
-    
+
     @Autowired
     private Sender sender;
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public Queue graderToExamGradeResponseQ()
     {
         return new Queue("graderToExamGradeResponseQ", false);
     }
 
+    /**
+     *
+     * @param objects
+     */
     @RabbitListener(queues = "graderToExamGradeResponseQ")
     public void receiveFromGraderToExamGradeResponseQ(Object[] objects)
     {
         Long examId = (Long) objects[0];
         Double grade = (Double) objects[1];
+
+        Utils.consoleMsg(
+                "EXAM/RECEIVER/EXAM ID: " + examId +
+                ", GRADE: " + grade);
+
+        Exam updatedExam = (Exam) examService.updateExamGrade(examId, grade);
         
-        Utils.consoleMsg("EXAM/RECEIVER/EXAM ID: " + examId + ", GRADE: " + grade );
-        
-        Exam updatedExam = (Exam) examService.updateExamGrade(examId, grade );
+        sender.sendToExamToUiGradedExamQ(examId, grade );
     }
 }

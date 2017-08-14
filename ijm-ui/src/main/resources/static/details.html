@@ -12,12 +12,16 @@
         href="http://www.w3schools.com/lib/w3.css" />
   </head>
   <body class="w3-dark-grey w3-myfont">
+
+    <!--ANGULAR APPLICATION-->
     <div ng-app="detailsApp">
       <div class=
            "w3-container w3-center w3-blue-grey w3-margin-bottom">
         <h5 class=
             "w3-myfont">Introduction to Java Microservices - Almir Campos, 2017</h5>
       </div>
+
+      <!--ANGULAR CONTROLLER-->
       <div ng-controller="detailsController">
         <button 
             class="
@@ -38,12 +42,16 @@
               <button
                   class ="w3-btn w3-teal"
                   ng-click="updateExamDescription()">
-                Ok
+                Update
               </button>
             </strong> (Exam ID: {{examId}})
           </h3>
         </div>
+
+        <!--QUESTION AND ANSWERS-->
         <div ng-repeat="question in questions">
+
+          <!--QUESTION STATEMENT-->
           <div class="w3-container w3-grey" style="width: 100%;">
             <span
                 class="w3-text-black w3-large w3-padding">
@@ -56,6 +64,9 @@
               </span>
             </span>
           </div>
+
+
+          <!--ANSWERS-->
           <ol type="a" style="margin-left: 3em;">
             <li 
                 ng-repeat="answer in question.answers"
@@ -70,6 +81,7 @@
 
         </div>
 
+        <!--DELETE EXAM BUTTON-->
         <button 
             class="
             w3-btn-block
@@ -99,7 +111,7 @@
                         $scope.examId,
                         $scope.examDescription,
                         $scope.examGrade);
-                //
+                // GET ANSWERED EXAM
                 //
                 var url = "/getAnsweredExam?examId=" +
                         $scope.examId;
@@ -108,7 +120,7 @@
                         {
                             $scope.questions = response.data;
                         });
-                //
+                // SET ANSWER'S COLOR
                 //
                 $scope.answerColor = function (answer)
                 {
@@ -120,13 +132,16 @@
                         return 'w3-text-green';
                     }
                 };
-                //
+                
+                // NAVIGATE TO EXAM LIST
                 //
                 $scope.examList = function ()
                 {
                     window.location.href = "index.html";
                 };
-                //
+                
+                
+                // DELETE AN EXAM
                 //
                 $scope.deleteExam = function ()
                 {
@@ -140,7 +155,9 @@
                                 });
                     }
                 };
-                //
+
+
+                // UPDATE EXAM DESCRIPTION
                 //
                 $scope.updateExamDescription = function ()
                 {
