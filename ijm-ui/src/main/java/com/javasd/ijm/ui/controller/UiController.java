@@ -34,6 +34,7 @@ public class UiController
 
     /**
      *
+     * @param includeDeleted
      * @return
      */
     @RequestMapping(
@@ -149,5 +150,11 @@ public class UiController
     private Object checkExamMsFallBack()
     {
         return "{ \"status\": \"NOK\" }";
+    }
+    
+    @RequestMapping( value = "/getExamLogByExamId", method = RequestMethod.GET )
+    public Object getExamLogByExamId( Long examId )
+    {
+        return uiService.getExamLogByExamId(examId);
     }
 }

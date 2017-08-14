@@ -93,7 +93,25 @@
             ng-click="deleteExam()">
           Delete Exam
         </button>
-
+        <br />
+        LOG
+        <div>
+          <table class="w3-table-all w3-text-black">
+            <tr>
+              <td>Date Received</td>
+              <td>{{ examLog.dateReceived | date: 'medium' }}</td>
+            </tr>
+            <tr>
+              <td>Date Graded</td>
+              <td>{{ examLog.dataGraded | date: 'medium' }}</td>
+            </tr>
+            <tr>
+              <td>Grade</td>
+              <td>{{ examLog.grade | number: 2 }}</td>
+            </tr>
+          </table>
+        </div>
+        <!--<pre>{{ examLog  | json }}</pre>-->
         <!--<pre>{{ questions | json }}-->
       </div>
     </div>
@@ -126,6 +144,17 @@
                         {
                             $scope.questions = response.data;
                         });
+                        
+                // GET EXAM LOG
+                //
+                var url = "/getExamLogByExamId?examId=" +
+                        $scope.examId;
+                $http.get(url)
+                        .then(function (response)
+                        {
+                            $scope.examLog = response.data;
+                        });
+                        
                 // SET ANSWER'S COLOR
                 //
                 $scope.answerColor = function (answer)
