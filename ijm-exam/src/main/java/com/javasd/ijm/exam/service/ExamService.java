@@ -38,7 +38,8 @@ public class ExamService
      */
     public Object findAll()
     {
-        return examRepository.findByOrderByIdDesc();
+//        return examRepository.findByOrderByIdDesc();
+        return examRepository.findByDeletedFalseOrderByIdDesc();
     }
 
     /**
@@ -74,6 +75,11 @@ public class ExamService
 
     }
 
+    /**
+     *
+     * @param nQuestions
+     * @return
+     */
     public Object getRandomQuestions(int nQuestions)
     {
         RestTemplate restTemplate = new RestTemplate();
@@ -90,6 +96,11 @@ public class ExamService
         return randomQuestions;
     }
     
+    /**
+     *
+     * @param questions
+     * @param examDescription
+     */
     public void saveExam( List<Question> questions, String examDescription )
     {
         Exam exam = new Exam();
@@ -102,7 +113,7 @@ public class ExamService
         ExamQuestion examQuestion;
         for (Question question : questions)
         {
-            Utils.consoleMsg(question.getDescription());
+            //Utils.consoleMsg(question.getDescription());
 
             examQuestion = new ExamQuestion();
             examQuestion.setExam(exam);
@@ -120,9 +131,15 @@ public class ExamService
             examQuestions.add(examQuestion);
         }
 
-        
         exam.setExamQuestions(examQuestions);
         examRepositoryAux.saveExam( exam );
+    }
+    
+    public Object deleteExam( Long examId )
+    {
+        Exam examToDelete = examRepository.findOne(examId);
+        examToDelete.setDeleted(true);
+        return examRepository.save( examToDelete );
     }
 
 }

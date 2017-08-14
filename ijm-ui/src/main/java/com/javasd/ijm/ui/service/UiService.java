@@ -9,9 +9,12 @@ import com.javasd.ijm.commons.deo.exam.Exam;
 import com.javasd.ijm.commons.deo.exam.ExamQuestion;
 import com.javasd.ijm.commons.deo.qna.Answer;
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -149,6 +152,20 @@ public class UiService
                 questions,
                 List.class
         );
+    }
+    
+    public Object deleteExam( Long examId )
+    {
+        Utils.consoleMsg("EXAM ID: " + examId );
+//        MultiValueMap<String, Long> map = new LinkedMultiValueMap();
+//        map.add("examId", examId);
+        Exam examToDelete = new Exam();
+        examToDelete.setId( examId );
+        String url = "http://localhost:9005/deleteExam";
+        return restTemplate.postForObject(
+                url,
+                examToDelete,
+                Exam.class );
     }
 
     //

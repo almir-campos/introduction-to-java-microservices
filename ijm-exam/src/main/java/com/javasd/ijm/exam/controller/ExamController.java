@@ -6,6 +6,7 @@
 package com.javasd.ijm.exam.controller;
 
 import com.javasd.ijm.commons.deo.qna.Question;
+import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.entity.Exam;
 import com.javasd.ijm.exam.service.ExamService;
 import java.util.List;
@@ -91,6 +92,11 @@ public class ExamController
         return examService.examQnaQuestions(examId);
     }
 
+    /**
+     *
+     * @param nQuestions
+     * @return
+     */
     @RequestMapping(
             value = "/getRandomQuestions",
             method = RequestMethod.GET)
@@ -99,11 +105,26 @@ public class ExamController
         return examService.getRandomQuestions(nQuestions);
     }
 
+    /**
+     *
+     * @param questions
+     * @param examDescription
+     */
     @RequestMapping(
             value = "/saveExam",
             method = RequestMethod.POST)
     public void saveExam(@RequestBody List<Question> questions, String examDescription )
     {
         examService.saveExam( questions , examDescription );
+    }
+    
+    @RequestMapping(
+            value = "/deleteExam",
+            method = RequestMethod.POST )
+    public Object deleteExam( @RequestBody Exam exam )
+    {
+        Long examId = exam.getId();
+        Utils.consoleMsg( "EXAM/CONTROLLER/DELETE EXAM/EXAM ID: " + examId );
+        return examService.deleteExam(examId);
     }
 }

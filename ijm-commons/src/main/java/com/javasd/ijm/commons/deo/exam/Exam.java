@@ -5,6 +5,7 @@
  */
 package com.javasd.ijm.commons.deo.exam;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 
@@ -116,6 +117,7 @@ public class Exam implements Serializable
      *
      * @return
      */
+    @JsonIgnore
     public Long[] getQnaQuestionIds()
     {
         Long[] ids = new Long[examQuestions.size()];

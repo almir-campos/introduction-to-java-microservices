@@ -22,6 +22,11 @@ public class ExamRepositoryAux
     @PersistenceContext
     private EntityManager entityManager;
     
+    /**
+     *
+     * @param exam
+     * @return
+     */
     public Exam saveExam( Exam exam )
     {
         return (Exam) entityManager.merge( exam );
