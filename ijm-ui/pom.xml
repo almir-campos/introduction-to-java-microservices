@@ -76,6 +76,12 @@
             <artifactId>spring-rabbit</artifactId>
             <type>jar</type>
         </dependency>
+        <!--WEBSOCKET-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
