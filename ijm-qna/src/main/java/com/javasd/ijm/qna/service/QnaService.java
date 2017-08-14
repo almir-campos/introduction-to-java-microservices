@@ -19,8 +19,22 @@ public class QnaService
     @Autowired
     private QnaRepository qnaRepository;
     
+    /**
+     *
+     * @return
+     */
     public Object findAll()
     {
         return qnaRepository.findAll();
+    }
+    
+    /**
+     *
+     * @param questionIds
+     * @return
+     */
+    public Object findAll( Iterable<Long> questionIds )
+    {
+        return qnaRepository.findAll( questionIds );
     }
 }
