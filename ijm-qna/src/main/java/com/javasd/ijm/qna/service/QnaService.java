@@ -5,6 +5,7 @@
  */
 package com.javasd.ijm.qna.service;
 
+import com.javasd.ijm.qna.entity.Question;
 import com.javasd.ijm.qna.repository.QnaRepository;
 import com.javasd.ijm.qna.repository.QnaRepositoryAux;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class QnaService
     {
         return qnaRepositoryAux
                 .getRandomQuestions( nQuestions );
+    }
+    
+    public Object saveQuestion( Question question )
+    {
+        return qnaRepository.save( question );
     }
 }
