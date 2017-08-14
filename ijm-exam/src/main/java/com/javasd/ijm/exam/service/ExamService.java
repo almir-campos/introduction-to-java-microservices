@@ -141,5 +141,12 @@ public class ExamService
         examToDelete.setDeleted(true);
         return examRepository.save( examToDelete );
     }
+    
+    public Object updateExamDescription( Long examId, String examDescription )
+    {
+        Exam examToDelete = examRepository.findOne(examId);
+        examToDelete.setDescription(examDescription);
+        return examRepository.save( examToDelete );
+    }
 
 }

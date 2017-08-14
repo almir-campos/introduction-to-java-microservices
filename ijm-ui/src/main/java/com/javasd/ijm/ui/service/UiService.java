@@ -157,8 +157,6 @@ public class UiService
     public Object deleteExam( Long examId )
     {
         Utils.consoleMsg("EXAM ID: " + examId );
-//        MultiValueMap<String, Long> map = new LinkedMultiValueMap();
-//        map.add("examId", examId);
         Exam examToDelete = new Exam();
         examToDelete.setId( examId );
         String url = "http://localhost:9005/deleteExam";
@@ -167,7 +165,19 @@ public class UiService
                 examToDelete,
                 Exam.class );
     }
-
+    
+    public Object updateExamDescription( Long examId, String examDescription )
+    {
+        Utils.consoleMsg("EXAM ID: " + examId );
+        Exam examToUpdate = new Exam();
+        examToUpdate.setId( examId );
+        examToUpdate.setDescription( examDescription );
+        String url = "http://localhost:9005/updateExamDescription";
+        return restTemplate.postForObject(
+                url,
+                examToUpdate,
+                Exam.class );
+    }
     //
     //
     private boolean isAnsweredAsCorrect(Exam exam,
