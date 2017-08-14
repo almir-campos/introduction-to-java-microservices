@@ -2,6 +2,7 @@ package com.javasd.ijm.exam;
 
 import com.javasd.ijm.commons.utils.Utils;
 import com.javasd.ijm.exam.email.EmailService;
+import com.javasd.ijm.exam.messaging.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,9 @@ public class IjmExamApplication
     @Autowired
     private EmailService emailService;
     
+    @Autowired
+    private Sender sender;
+    
     /**
      *
      * @param args
@@ -43,5 +47,6 @@ public class IjmExamApplication
     {
         Utils.consoleMsg(
                 "Exam Microservice up and running!");
+        sender.sendToExamToUiExamAliveQ();
     }
 }

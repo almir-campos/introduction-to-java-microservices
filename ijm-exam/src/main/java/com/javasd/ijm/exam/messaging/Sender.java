@@ -87,4 +87,26 @@ public class Sender
         + ", EXAM GRADE: " + examGrade );
         rmTemplate.convertAndSend( "examToUiGradedExamQ", new Object[]{ examId, examGrade} );
     }
+    
+    @Bean
+    public Queue examToUiExamAliveQ()
+    {
+        return new Queue("examToUiExamAliveQ", false);
+    }
+
+    /**
+     *
+     */
+    public void sendToExamToUiExamAliveQ()
+    {
+        Utils.consoleMsg("sendToExamAliveQ", "I'm Alive");
+        try
+        {
+            rmTemplate.convertAndSend("examToUiExamAliveQ", "OK");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
