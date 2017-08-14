@@ -11,11 +11,55 @@
         rel="stylesheet"
         href="http://www.w3schools.com/lib/w3.css" />
   </head>
-  <body>
+  <body class="w3-dark-grey w3-myfont">
     <div ng-app="detailsApp">
+      <div class=
+           "w3-container w3-center w3-blue-grey w3-margin-bottom">
+        <h5 class=
+            "w3-myfont">Introduction to Java Microservices - Almir Campos, 2017</h5>
+      </div>
       <div ng-controller="detailsController">
-        Details for Exam {{examId}}: {{examDescription}} ({{examGrade}})<br />
-        <pre>{{ questions | json }}
+        <button 
+            class="
+            w3-btn-block
+            w3-teal 
+            w3-xlarge 
+            w3-margin-bottom"
+            ng-click="examList()">Exam List</button>
+
+        <div class=
+             "w3-container w3-center w3-blue-grey w3-text-black w3-margin-bottom">
+          <h3>
+            <strong>{{examDescription}}</strong> (Exam ID: {{examId}})
+          </h3>
+        </div>
+        <div ng-repeat="question in questions">
+          <div class="w3-container w3-grey" style="width: 100%;">
+            <span
+                class="w3-text-black w3-large w3-padding">
+              <strong>
+                {{$index + 1}})
+                {{question.description}}
+              </strong>
+              <span style="float: right;">
+                [Question Id: {{question.id}}]
+              </span>
+            </span>
+          </div>
+          <ol type="a" style="margin-left: 3em;">
+            <li 
+                ng-repeat="answer in question.answers"
+                class="w3-large"
+                ng-class="answerColor(answer);">
+              {{answer.description}}
+              <span style="float: right; margin-right: 1em;">
+                [Answer Id: {{answer.id}}]
+              </span>
+            </li>
+          </ol>
+
+        </div>
+        <!--<pre>{{ questions | json }}-->
       </div>
     </div>
   </body>
@@ -24,23 +68,43 @@
             .controller("detailsController", function (
                     $scope, $http)
             {
-                $scope.examId = localStorage.getItem("examId");
+                $scope.examId = localStorage
+                        .getItem("examId");
                 $scope.examDescription = localStorage
                         .getItem("examDescription");
                 $scope.examGrade = localStorage
                         .getItem("examGrade");
+
                 console.log(
                         $scope.examId,
                         $scope.examDescription,
                         $scope.examGrade);
-
-                var url = "/examQnaQuestions?examId=" +
+                //
+                //
+                var url = "/getAnsweredExam?examId=" +
                         $scope.examId;
                 $http.get(url)
                         .then(function (response)
                         {
                             $scope.questions = response.data;
                         });
+                //
+                //
+                $scope.answerColor = function (answer)
+                {
+                    if (answer.chosen && !answer.correct)
+                    {
+                        return 'w3-text-red';
+                    } else if (answer.correct)
+                    {
+                        return 'w3-text-green';
+                    }
+                };
+                //
+                //
+                $scope.examList = function () {
+                    window.location.href = "index.html";
+                };
             });
   </script>
 </html>
