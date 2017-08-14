@@ -4,7 +4,7 @@
 
 * The code in this repository will support a video-training which is in preparation.
 * Its purpose is to guide the student step-by-step with focus in understanding the Java Microservices basic techniques and architecture.
-* We assume that the student already knows (or is aware of) the best practices, coding standards, etc. Based on this assumption in several ocasions the code was simplified to avoid adding complexity.
+* We assume that the student already knows (or is aware of) the best practices, coding standards, etc. Based on this assumption the code was simplified in several ocasions to avoid adding complexity.
 * Also, please be aware that the code is under review.
 * Therefore, the MUST NOT be used in a production environment.
 * Also, it doesn't cover important subjects like Security, OAuth, Service Registry, among others, which will be covered in further trainings.
@@ -33,6 +33,8 @@
   * User Interface (ijm_ui) - Uses AngularJS 2
 
 * Commons Library (ijm_commons)
+
+* Swagger2 (all microservices)
 
 * MySQL Databases
   * ijm_qna (for questions and answers)
