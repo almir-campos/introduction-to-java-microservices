@@ -9,7 +9,7 @@
             <goal>spring-boot:run</goal>
         </goals>
         <properties>
-            <run.jvmArguments>-noverify -XX:TieredStopAtLevel=1 </run.jvmArguments>
+            <run.jvmArguments>-noverify -XX:TieredStopAtLevel=1</run.jvmArguments>
             <run.mainClass>com.javasd.ijm.eureka.Ijm-eurekaApplication</run.mainClass>
             <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>
         </properties>
@@ -23,7 +23,7 @@
             <goal>spring-boot:run</goal>
         </goals>
         <properties>
-            <run.jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -noverify -XX:TieredStopAtLevel=1 </run.jvmArguments>
+            <run.jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -noverify -XX:TieredStopAtLevel=1</run.jvmArguments>
             <run.mainClass>com.javasd.ijm.eureka.Ijm-eurekaApplication</run.mainClass>
             <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>
             <jpda.listen>true</jpda.listen>
@@ -43,4 +43,238 @@
             <exec.executable>java</exec.executable>
         </properties>
     </action>
+    <action>
+            <actionName>CUSTOM-test1</actionName>
+            <displayName>test1</displayName>
+            <goals>
+                <goal>exec:java</goal>
+                <goal>-Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplicationTests"</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>eureka1-profile</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test2</actionName>
+            <displayName>test2</displayName>
+            <goals>
+                <goal>exec:java</goal>
+            </goals>
+            <properties>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplicationTests"</exec.mainClass>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test3</actionName>
+            <displayName>test3</displayName>
+            <goals>
+                <goal>exec:java</goal>
+            </goals>
+            <properties>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1</actionName>
+            <displayName>eureka1</displayName>
+            <goals>
+                <goal>exec:java</goal>
+                
+            </goals>
+            <properties>
+                <exec.args>-Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication"</exec.args>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1a</actionName>
+            <displayName>eureka1a</displayName>
+            <goals>
+                <goal>exec:exec</goal>
+            </goals>
+            <properties>
+                <exec.arguments>-Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication"</exec.arguments>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1c</actionName>
+            <displayName>eureka1c</displayName>
+            <goals>
+                <goal>exec:exec</goal>
+            </goals>
+            <properties>
+                <exec.arguments>-Dexec.args=-Dspring.profiles.active=eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable=/usr/lib/jvm/java-8-oracle/bin/java -Peureka1</exec.arguments>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1d</actionName>
+            <displayName>eureka1d</displayName>
+            <goals>
+                <goal>exec:exec</goal>
+            </goals>
+            <properties>
+                <exec.arguments>-Dexec.args=-Dspring.profiles.active=eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable="/usr/lib/jvm/java-8-oracle/bin/java" -Peureka1</exec.arguments>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1e</actionName>
+            <displayName>eureka1e</displayName>
+            <goals>
+                <goal>exec:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Dspring.profiles.active=eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable="/usr/lib/jvm/java-8-oracle/bin/java" -Peureka1</exec.args>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1f</actionName>
+            <displayName>eureka1f</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable="/usr/lib/jvm/java-8-oracle/bin/java"</spring.profiles.active>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-eureka1g</actionName>
+            <displayName>eureka1g</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable=/usr/lib/jvm/java-8-oracle/bin/java</spring.profiles.active>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1h</actionName>
+            <displayName>test1h</displayName>
+            <goals>
+                <goal>process-classes:run</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1i</actionName>
+            <displayName>test1i</displayName>
+            <goals>
+                <goal>process-classes:run</goal>
+            </goals>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1j</actionName>
+            <displayName>test1j</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1 -Dexec.mainClass="com.javasd.ijm.eureka.IjmEurekaApplication" -Dexec.executable=/usr/lib/jvm/java-8-oracle/bin/java</spring.profiles.active>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1k</actionName>
+            <displayName>test1k</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1</spring.profiles.active>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+                <exec.executable>/usr/lib/jvm/java-8-oracle/bin/java</exec.executable>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1l</actionName>
+            <displayName>test1l</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1</spring.profiles.active>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+                <exec.executable>/usr/lib/jvm/java-8-oracle/bin/java</exec.executable>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1m</actionName>
+            <displayName>test1m</displayName>
+            <goals>
+                <goal>exec:java</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1</spring.profiles.active>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+                <exec.executable>/usr/lib/jvm/java-8-oracle/bin/java</exec.executable>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1n</actionName>
+            <displayName>test1n</displayName>
+            <goals>
+                <goal>spring-boot:run</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1</spring.profiles.active>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+                <exec.executable>/usr/lib/jvm/java-8-oracle/bin/java</exec.executable>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
+    <action>
+            <actionName>CUSTOM-test1o</actionName>
+            <displayName>test1o</displayName>
+            <goals>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <spring.profiles.active>eureka1</spring.profiles.active>
+                <exec.mainClass>"com.javasd.ijm.eureka.IjmEurekaApplication"</exec.mainClass>
+                <exec.executable>/usr/lib/jvm/java-8-oracle/bin/java</exec.executable>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>eureka1</activatedProfile>
+            </activatedProfiles>
+        </action>
 </actions>

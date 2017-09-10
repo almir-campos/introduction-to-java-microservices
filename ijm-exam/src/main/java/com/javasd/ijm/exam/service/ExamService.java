@@ -33,6 +33,8 @@ public class ExamService
     private ExamRepositoryAux examRepositoryAux;
     @Autowired
     private Sender sender;
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      *
@@ -68,7 +70,7 @@ public class ExamService
         Exam exam = (Exam) findOne(examId);
         Long[] examIds = exam.getQnaQuestionIds();
 
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9017/findAllById";
 
         ResponseEntity<Question[]> qnaQuestions
@@ -88,9 +90,12 @@ public class ExamService
      */
     public Object getRandomQuestions(int nQuestions)
     {
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url
+//                = "http://localhost:9017/getRandomQuestions" +
+//                "?nQuestions=" + nQuestions;
         String url
-                = "http://localhost:9017/getRandomQuestions" +
+                = "http://IJM-QNA/getRandomQuestions" +
                 "?nQuestions=" + nQuestions;
 
         Object randomQuestions = restTemplate.

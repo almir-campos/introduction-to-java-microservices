@@ -26,10 +26,15 @@
             <artifactId>spring-cloud-starter-eureka-server</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+       
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -42,6 +47,11 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>eureka1</id>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
@@ -51,6 +61,11 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+<!--            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+            </plugin>-->
         </plugins>
     </build>
 </project>
