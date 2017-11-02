@@ -27,6 +27,12 @@ public class UiService
 
     @Autowired
     private RestTemplate restTemplate;
+    
+    @Autowired
+    private String examBaseUrl;
+    
+    @Autowired
+    private String loggerBaseUrl;
 
     /**
      *
@@ -35,7 +41,7 @@ public class UiService
      */
     public Object findAll( Boolean includeDeleted )
     {
-        String url = "http://localhost:9005/findAll?includeDeleted=" + includeDeleted;
+        String url = examBaseUrl + "/findAll?includeDeleted=" + (includeDeleted == null ? false : includeDeleted);
         Object exams = restTemplate.getForObject(
                 url,
                 Object.class);
@@ -49,7 +55,7 @@ public class UiService
      */
     public Object examQnaQuestions(Long examId)
     {
-        String url = "http://localhost:9005/" +
+        String url = examBaseUrl + 
                 "examQnaQuestions?examId=" + examId;
         Object questions = restTemplate.getForObject(
                 url,
@@ -64,7 +70,7 @@ public class UiService
      */
     public Object examQnaQuestionsHideCorrect(Long examId)
     {
-        String url = "http://localhost:9005/" +
+        String url = examBaseUrl + 
                 "examQnaQuestions?examId=" + examId;
         Question[] questions = restTemplate.getForObject(
                 url,
@@ -86,7 +92,7 @@ public class UiService
      */
     public Object getAnsweredExam(Long examId)
     {
-        String url = "http://localhost:9005/" +
+        String url = examBaseUrl + 
                 "findOne?examId=" + examId;
 
         Exam exam = restTemplate.getForObject(
@@ -94,7 +100,7 @@ public class UiService
                 Exam.class
         );
 
-        url = "http://localhost:9005/" +
+        url = examBaseUrl + 
                 "examQnaQuestions?examId=" + examId;
         Question[] questions = restTemplate.getForObject(
                 url,
@@ -117,7 +123,7 @@ public class UiService
      */
     public Object getRandomQuestionsHideCorrect(int nQuestions)
     {
-        String url = "http://localhost:9005/" +
+        String url = examBaseUrl +
                 "getRandomQuestions?nQuestions=" + nQuestions;
         Question[] questions = restTemplate.getForObject(
                 url,
@@ -144,7 +150,7 @@ public class UiService
 
         
 
-        String url = "http://localhost:9005/saveExam" +
+        String url = examBaseUrl + "/saveExam" +
                 "?examDescription="+examDescription;
 
         restTemplate.postForObject(
@@ -159,7 +165,7 @@ public class UiService
         Utils.consoleMsg("EXAM ID: " + examId );
         Exam examToDelete = new Exam();
         examToDelete.setId( examId );
-        String url = "http://localhost:9005/deleteExam";
+        String url = examBaseUrl + "/deleteExam";
         return restTemplate.postForObject(
                 url,
                 examToDelete,
@@ -172,7 +178,7 @@ public class UiService
         Exam examToUpdate = new Exam();
         examToUpdate.setId( examId );
         examToUpdate.setDescription( examDescription );
-        String url = "http://localhost:9005/updateExamDescription";
+        String url = examBaseUrl + "/updateExamDescription";
         return restTemplate.postForObject(
                 url,
                 examToUpdate,
@@ -181,7 +187,7 @@ public class UiService
     
     public Object getExamLogByExamId( Long examId )
     {
-        String url = "http://localhost:9012/findByExamId?examId=" + examId;
+        String url = loggerBaseUrl + "/findByExamId?examId=" + examId;
         ExamLog examLog = restTemplate.getForObject(url, ExamLog.class );
         return examLog;
         

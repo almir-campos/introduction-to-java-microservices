@@ -6,6 +6,7 @@ import com.javasd.ijm.commons.utils.Utils;
 import java.net.URL;
 import java.text.DecimalFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,77 @@ public class IjmUiApplication implements CommandLineRunner
 
     @Autowired
     private Environment environment;
+    
+    // QnA base url
+    //
+    @Value("${qna.${ijm_env}.host}")
+    private String qnaHost;
+    @Value("${qna.${ijm_env}.port}")
+    private String qnaPort;
+    @Value("${qna.${ijm_env}.management.port}")
+    private String qnaManagementPort;
+    
+    @Bean
+    public String qnaBaseUrl()
+    {
+        return "http://" + qnaHost + ":" + qnaPort; 
+    }
+    
+    @Bean
+    public String qnaManagementBaseUrl()
+    {
+        return "http://" + qnaHost + ":" + qnaManagementPort; 
+    }
+    
+    
+    // Exam base url
+    //
+    @Value("${exam.${ijm_env}.host}")
+    private String examHost;
+    @Value("${exam.${ijm_env}.port}")
+    private String examPort;
+    
+    @Bean
+    public String examBaseUrl()
+    {
+        return "http://" + examHost + ":" + examPort; 
+    }
+    
+    // Logger base url
+    //
+    @Value("${logger.${ijm_env}.host}")
+    private String loggerHost;
+    @Value("${logger.${ijm_env}.port}")
+    private String loggerPort;
+    
+    @Bean
+    public String loggerBaseUrl()
+    {
+        return "http://" + loggerHost + ":" + loggerPort; 
+    }
+    
+    // UI base url
+    //
+    @Value("${ui.${ijm_env}.host}")
+    private String uiHost;
+    @Value("${ui.${ijm_env}.port}")
+    private String uiPort;
+    @Value("${ui.${ijm_env}.management.port}")
+    private String uiManagementPort;
+    
+    @Bean
+    public String uiBaseUrl()
+    {
+        return "http://" + uiHost + ":" + uiPort; 
+    }
+    
+    @Bean
+    public String uiManagementBaseUrl()
+    {
+        return "http://" + uiHost + ":" + uiManagementPort; 
+    }
+    
+    
 
     /**
      *
@@ -44,12 +116,16 @@ public class IjmUiApplication implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception
     {
+        System.out.println(this.getClass() + "=====>>>>> uiHost: " + uiHost);
+        System.out.println(this.getClass() + "=====>>>>> uiPort: " + uiPort);
+        System.out.println(this.getClass() + "=====>>>>> uiManagementPort: " + uiManagementPort);
+        
         String serverPort = environment.getProperty("server.port");
         String managementPort = environment.getProperty("management.port");
         Utils.consoleMsg("UI Microservice up and running at port " + serverPort +
-                " (Please, use the port " + managementPort + " for the Actuator endpoints)");
+                " (Please, use the port " + uiManagementPort + " for the Actuator endpoints)");
 
-        String actuatorUrl = "http://localhost:9022";
+        //String actuatorUrl = "http://localhost:9022";
         ObjectMapper objectMapper = new ObjectMapper();
         URL url;
         JsonNode json;
@@ -57,7 +133,7 @@ public class IjmUiApplication implements CommandLineRunner
         
         // HEALTH
         //
-        url = new URL(actuatorUrl + "/health");
+        url = new URL(uiManagementBaseUrl() + "/health");
         json = objectMapper.readTree(url);
         String healthFreeSpace =
                 "+ Free Disk Space: " +
@@ -66,7 +142,7 @@ public class IjmUiApplication implements CommandLineRunner
 
         // METRICS 
         //
-        url = new URL(actuatorUrl + "/metrics");
+        url = new URL(uiManagementBaseUrl() + "/metrics");
         json = objectMapper.readTree(url);
         String metricsFreeMemory =
                 "+ Free Memory    : " +
@@ -75,7 +151,7 @@ public class IjmUiApplication implements CommandLineRunner
         
         // ENV 
         //
-        url = new URL(actuatorUrl + "/env");
+        url = new URL(uiManagementBaseUrl() + "/env");
         json = objectMapper.readTree(url);
         String javaVersion =
                 "+ Java Version   : " + json.get("systemProperties").get("java.version").toString();

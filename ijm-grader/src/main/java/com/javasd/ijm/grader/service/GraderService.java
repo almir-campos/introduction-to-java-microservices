@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +25,9 @@ public class GraderService
 
     @Autowired
     private RestTemplate restTemplate;
+    
+    @Autowired
+    private String qnaBase;
 
     public List<Question> findOriginalQuestions(List<Question> answeredQuestions)
     {
@@ -33,7 +37,7 @@ public class GraderService
             answeredQuestionIds.add(answeredQuestion.getId());
         }
 
-        String qnaFindAllByIdUrl = "http://localhost:9017/findAllById";
+        String qnaFindAllByIdUrl = qnaBase + "/findAllById";
 
         Question[] originalQuestionsArr = restTemplate.postForObject(
                 qnaFindAllByIdUrl,

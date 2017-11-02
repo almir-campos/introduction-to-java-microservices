@@ -15,7 +15,9 @@ import com.javasd.ijm.exam.repository.ExamRepositoryAux;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,11 +35,15 @@ public class ExamService
     private ExamRepositoryAux examRepositoryAux;
     @Autowired
     private Sender sender;
+   
+    @Autowired
+    private String qnaBase;
 
     /**
      *
      * @param includeDeleted
      * @return
+     * 
      */
     public Object findAll(boolean includeDeleted)
     {
@@ -69,7 +75,7 @@ public class ExamService
         Long[] examIds = exam.getQnaQuestionIds();
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:9017/findAllById";
+        String url = qnaBase + "/findAllById";
 
         ResponseEntity<Question[]> qnaQuestions
                 = restTemplate.postForEntity(
@@ -90,8 +96,10 @@ public class ExamService
     {
         RestTemplate restTemplate = new RestTemplate();
         String url
-                = "http://localhost:9017/getRandomQuestions" +
+                = qnaBase + "/getRandomQuestions" +
                 "?nQuestions=" + nQuestions;
+        
+        System.out.println("url: " + url);
 
         Object randomQuestions = restTemplate.
                 getForObject(url, Object.class);

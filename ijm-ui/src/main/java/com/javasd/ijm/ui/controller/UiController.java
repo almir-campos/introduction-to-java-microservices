@@ -31,6 +31,12 @@ public class UiController
 
     @Autowired
     private UiService uiService;
+    
+    @Autowired
+    private String qnaManagementBaseUrl;
+
+    @Autowired
+    private String examBaseUrl;
 
     /**
      *
@@ -42,6 +48,7 @@ public class UiController
             method = RequestMethod.GET)
     public Object findAll(Boolean includeDeleted )
     {
+        System.out.println(this.getClass() + "=====>>>>>" + includeDeleted );
         return uiService.findAll(includeDeleted);
     }
 
@@ -141,7 +148,7 @@ public class UiController
     @RequestMapping( value = "/checkExamMs", method = RequestMethod.GET )
     public Object checkExamMs()
     {
-        URI uri = URI.create("http://localhost:9005");
+        URI uri = URI.create(examBaseUrl);
         RestTemplate restTemplate = new RestTemplate();
         Object returnObject = restTemplate.getForObject(uri, String.class);
         return "{ \"status\": \"OK\" }";
@@ -170,7 +177,8 @@ public class UiController
     @RequestMapping( value = "/checkQnaMs", method = RequestMethod.GET )
     public Object checkQnaMs()
     {
-        String url = "http://localhost:9018/health";
+        String url = qnaManagementBaseUrl + "/health";
+        System.out.println(this.getClass() + "=====>>>>>" + qnaManagementBaseUrl );
         RestTemplate restTemplate = new RestTemplate();
         String returnObject = restTemplate.getForObject(url, String.class);
         Utils.consoleMsg( "QNA IS UP: " + returnObject);
