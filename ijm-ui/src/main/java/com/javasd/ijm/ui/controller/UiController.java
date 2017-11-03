@@ -14,6 +14,9 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -127,7 +130,6 @@ public class UiController
 //        Utils.consoleMsg("EXAM ID/controller: " + examId);
         return uiService.deleteExam(examId);
     }
-    
     @RequestMapping(
             value = "/updateExamDescription",
             method = RequestMethod.POST)
@@ -149,6 +151,7 @@ public class UiController
     public Object checkExamMs()
     {
         URI uri = URI.create(examBaseUrl);
+        System.out.println("examBaseUrl: " + examBaseUrl );
         RestTemplate restTemplate = new RestTemplate();
         Object returnObject = restTemplate.getForObject(uri, String.class);
         return "{ \"status\": \"OK\" }";

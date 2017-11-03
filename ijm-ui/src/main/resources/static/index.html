@@ -5,202 +5,211 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-  <head>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script 
-        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
-    </script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js">
-    </script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
-    </script>
-    <!--STYLES-->
-    <link
-        rel="stylesheet"
-        href="http://www.w3schools.com/lib/w3.css" />
-  </head>
-  <body class="w3-dark-grey w3-text-white">
-    <div ng-app="UiApp">
-      <div class=
-           "w3-container w3-center w3-blue-grey w3-margin-bottom">
-        <h5>
-          Introduction to Java Microservices - Almir Campos, 2017</h5>
-      </div>
-      <div ng-controller="UiController">
-        <button
-            ng-click="navToTakeAnExam()"
-            class="
-            w3-btn-block
-            w3-teal
-            w3-large
-            w3-margin-bottom">
-          Take an Exam
-        </button>
-        <button
-            ng-click="navToStudy()"
-            class="
-            w3-btn-block
-            w3-teal
-            w3-large
-            w3-margin-bottom">
-          Study
-        </button>
-        <button
-            ng-click="showHideDeleted()"
-            class="
-            w3-btn-block
-            w3-teal
-            w3-large
-            w3-margin-bottom">
-            {{showDeleted ? "Hide Deleted" : "Show Deleted"}}
-        </button>
-        <div id="examGradeFromWebSocket" style="float: right; background: red; color: white;"></div>
-        <table class="w3-table-all w3-large">
-          <thead>
-            <tr class="w3-green">
-              <th>ID</th>
-              <th>DESCRIPTION</th>
-              <th>GRADE</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody class="w3-text-black">
-            <tr ng-repeat="exam in exams" class="{{exam.deleted ? 'w3-text-red' : ''}}">
-              <td>{{exam.id}}</td>
-              <td>{{exam.description}}</td>
-              <td style="float: right; margin-right: 2em;">
-                {{exam.grade| number: 2}}</td>
-              <td>
-                <button class="
-                        w3-btn
-                        w3-teal
-                        w3-large
-                        w3-margin-bottom"
-                        ng-click="navToDetails(
-                                              exam.id,
-                                              exam.description,
-                                              exam.grade,
-                                              exam.deleted)">
-                  Details
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script 
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js">
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
+        </script>
+        <!--STYLES-->
+        <link
+            rel="stylesheet"
+            href="http://www.w3schools.com/lib/w3.css" />
+        <style>
+            #logout{
+                float: right;
+                font-size: 0.8em;
+            }
+        </style>
+    </head>
+    <body class="w3-dark-grey w3-text-white">
+        <div ng-app="UiApp">
+            <div class=
+                 "w3-container w3-center w3-blue-grey w3-margin-bottom">
+                <h5>
+                    Introduction to Java Microservices - Almir Campos, 2017
+                    <a id="logout" href="/logout">Logout</a>
+                </h5>
+
+            </div>
+            <div ng-controller="UiController">
+                <button
+                    ng-click="navToTakeAnExam()"
+                    class="
+                    w3-btn-block
+                    w3-teal
+                    w3-large
+                    w3-margin-bottom">
+                    Take an Exam
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!--<pre>{{exams | json}}</pre>-->
-      </div>
-    </div>
-    <script>
-      angular
-              .module("UiApp", [])
-              .controller("UiController",
-                      function ($http, $scope)
-                      {
-                          $http.get("/checkExamMs")
-                                  .then(function (response) {
-                                      console.log("CHECK EXAM MS: " + response.data.status);
-                                      if (response.data.status === "NOK")
-                                      {
-                                          localStorage.setItem("examIsAlive", "false");
-                                          window.location.href = "/study.html";
-                                      } else
-                                      {
-                                          console.log(
-                                                  "UI Controller up!");
-                                          localStorage.setItem("examIsAlive", "true");
-                                          
-                                          // SHOW/HIDE DELETED
-                                          //
-                                          $scope.showDeleted = false;
-                                          $scope.showHideDeleted = function()
-                                          {
-                                              $scope.showDeleted = !$scope.showDeleted;
-                                              findAll();
-                                          };
-                                          
-                                          function findAll()
-                                          {
-                                             $http.get("/findAll?includeDeleted=" + $scope.showDeleted )
-                                                  .then(function (response)
-                                                  {
-                                                      $scope.exams =
-                                                              response.data;
-                                                  });
-                                          }
-                                          
-                                          findAll();
+                <button
+                    ng-click="navToStudy()"
+                    class="
+                    w3-btn-block
+                    w3-teal
+                    w3-large
+                    w3-margin-bottom">
+                    Study
+                </button>
+                <button
+                    ng-click="showHideDeleted()"
+                    class="
+                    w3-btn-block
+                    w3-teal
+                    w3-large
+                    w3-margin-bottom">
+                    {{showDeleted ? "Hide Deleted" : "Show Deleted"}}
+                </button>
+                <div id="examGradeFromWebSocket" style="float: right; background: red; color: white;"></div>
+                <table class="w3-table-all w3-large">
+                    <thead>
+                        <tr class="w3-green">
+                            <th>ID</th>
+                            <th>DESCRIPTION</th>
+                            <th>GRADE</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="w3-text-black">
+                        <tr ng-repeat="exam in exams" class="{{exam.deleted ? 'w3-text-red' : ''}}">
+                            <td>{{exam.id}}</td>
+                            <td>{{exam.description}}</td>
+                            <td style="float: right; margin-right: 2em;">
+                                {{exam.grade| number: 2}}</td>
+                            <td>
+                                <button class="
+                                        w3-btn
+                                        w3-teal
+                                        w3-large
+                                        w3-margin-bottom"
+                                        ng-click="navToDetails(
+                                                exam.id,
+                                                exam.description,
+                                                exam.grade,
+                                                exam.deleted)">
+                                    Details
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--<pre>{{exams | json}}</pre>-->
+            </div>
+        </div>
+        <script>
+            angular
+                    .module("UiApp", [])
+                    .controller("UiController",
+                            function ($http, $scope)
+                            {
+                                $http.get("/checkExamMs")
+                                        .then(function (response) {
+                                            console.log("CHECK EXAM MS: " + response.data.status);
+                                            if (response.data.status === "NOK")
+                                            {
+                                                localStorage.setItem("examIsAlive", "false");
+                                                window.location.href = "/study.html";
+                                            } else
+                                            {
+                                                console.log(
+                                                        "UI Controller up!");
+                                                localStorage.setItem("examIsAlive", "true");
 
-                                          // NAVIGATE TO DETAILS
-                                          //
-                                          $scope.navToDetails = function (
-                                                  examId, examDescription, examGrade, examDeleted)
-                                          {
-                                              localStorage.setItem(
-                                                      "examId", examId);
-                                              localStorage.setItem(
-                                                      "examDescription",
-                                                      examDescription);
-                                              localStorage.setItem(
-                                                      "examGrade",
-                                                      examGrade);
-                                              localStorage.setItem(
-                                                      "examDeleted",
-                                                      examDeleted);
-                                                     
-                                              window.location.href =
-                                                      "details.html";
-                                          };
+                                                // SHOW/HIDE DELETED
+                                                //
+                                                $scope.showDeleted = false;
+                                                $scope.showHideDeleted = function ()
+                                                {
+                                                    $scope.showDeleted = !$scope.showDeleted;
+                                                    findAll();
+                                                };
+
+                                                function findAll()
+                                                {
+                                                    $http.get("/findAll?includeDeleted=" + $scope.showDeleted)
+                                                            .then(function (response)
+                                                            {
+                                                                $scope.exams =
+                                                                        response.data;
+                                                            });
+                                                }
+
+                                                findAll();
+
+                                                // NAVIGATE TO DETAILS
+                                                //
+                                                $scope.navToDetails = function (
+                                                        examId, examDescription, examGrade, examDeleted)
+                                                {
+                                                    localStorage.setItem(
+                                                            "examId", examId);
+                                                    localStorage.setItem(
+                                                            "examDescription",
+                                                            examDescription);
+                                                    localStorage.setItem(
+                                                            "examGrade",
+                                                            examGrade);
+                                                    localStorage.setItem(
+                                                            "examDeleted",
+                                                            examDeleted);
+
+                                                    window.location.href =
+                                                            "details.html";
+                                                };
 
 
-                                          // NAVIGATE TO TAKE AN EXAM
-                                          //
-                                          $scope.navToTakeAnExam = function ()
-                                          {
-                                              window.location.href =
-                                                      "take.html";
-                                          };
+                                                // NAVIGATE TO TAKE AN EXAM
+                                                //
+                                                $scope.navToTakeAnExam = function ()
+                                                {
+                                                    window.location.href =
+                                                            "take.html";
+                                                };
 
 
-                                          // NAVIGATE TO TAKE AN EXAM
-                                          //
-                                          $scope.navToStudy = function ()
-                                          {
-                                              window.location.href =
-                                                      "study.html";
-                                          };
+                                                // NAVIGATE TO TAKE AN EXAM
+                                                //
+                                                $scope.navToStudy = function ()
+                                                {
+                                                    window.location.href =
+                                                            "study.html";
+                                                };
 
 
-                                          //
-                                          //
-                                          var socket = new SockJS("/uiWebSocket");
-                                          // Subscribing
-                                          //
-                                          var stompClient = Stomp.over(socket);
-                                          stompClient.connect({}, function (frame) {
-                                              console.log("FRAME: ", frame);
-                                              stompClient.subscribe(
-                                                      "/uiMessageBroker/sendExamGradeToFrontEnd",
-                                                      function (webSocketData) {
-                                                          console.log(
-                                                                  "WEBSOCKET DATA:", webSocketData);
-                                                          var examGrade =
-                                                                  JSON.parse(webSocketData.body);
-                                                          console.log("EXAM GRADE: ", examGrade);
-                                                          angular.element(document.querySelector(
-                                                                  "#examGradeFromWebSocket"))
-                                                                  .text(
-                                                                          "The exam " + examGrade[0]
-                                                                          + " was graded: "
-                                                                          + examGrade[1]);
-                                                      });
-                                          });
-                                      }
-                                  });
-                      });
-    </script>
-  </body>
+                                                //
+                                                //
+                                                var socket = new SockJS("/uiWebSocket");
+                                                // Subscribing
+                                                //
+                                                var stompClient = Stomp.over(socket);
+                                                stompClient.connect({}, function (frame) {
+                                                    console.log("FRAME: ", frame);
+                                                    stompClient.subscribe(
+                                                            "/uiMessageBroker/sendExamGradeToFrontEnd",
+                                                            function (webSocketData) {
+                                                                console.log(
+                                                                        "WEBSOCKET DATA:", webSocketData);
+                                                                var examGrade =
+                                                                        JSON.parse(webSocketData.body);
+                                                                console.log("EXAM GRADE: ", examGrade);
+                                                                angular.element(document.querySelector(
+                                                                        "#examGradeFromWebSocket"))
+                                                                        .text(
+                                                                                "The exam " + examGrade[0]
+                                                                                + " was graded: "
+                                                                                + examGrade[1]);
+                                                            });
+                                                });
+                                            }
+                                        });
+                            });
+        </script>
+    </body>
 </html>

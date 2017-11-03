@@ -27,6 +27,34 @@ public class IjmUiApplication implements CommandLineRunner
     @Autowired
     private Environment environment;
     
+//    // User
+//    @Value("${users.regular.username}")
+//    private String user_username;
+//    @Value("${users.regular.password}")
+//    private String user_password;
+//    @Value("${users.regular.role}")
+//    private String user_role;
+//    
+//    @Bean
+//    public String[] user_credentials()
+//    {
+//        return new String[] { user_username, user_password, user_role};
+//    }
+//    
+//    // Admin
+//    @Value("${users.admin.username}")
+//    private String admin_username;
+//    @Value("${users.admin.password}")
+//    private String admin_password;
+//    @Value("${users.admin.role}")
+//    private String admin_role;
+//    
+//    @Bean
+//    public String[] admin_credentials()
+//    {
+//        return new String[] {admin_username, admin_password, admin_role};
+//    }
+    
     // QnA base url
     //
     @Value("${qna.${ijm_env}.host}")
