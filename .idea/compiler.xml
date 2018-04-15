@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ijm-basics" />
+        <module name="ijm-commons" />
+        <module name="ijm-exam" />
+        <module name="ijm-grader" />
+        <module name="ijm-logger" />
+        <module name="ijm-myms" />
+        <module name="ijm-qna" />
+        <module name="ijm-ui" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ijm-basics" target="1.8" />
+      <module name="ijm-commons" target="1.8" />
+      <module name="ijm-exam" target="1.8" />
+      <module name="ijm-grader" target="1.8" />
+      <module name="ijm-logger" target="1.8" />
+      <module name="ijm-myms" target="1.8" />
+      <module name="ijm-qna" target="1.8" />
+      <module name="ijm-ui" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

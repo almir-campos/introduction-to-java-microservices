@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ijm-basics/ijm-basics.iml" filepath="$PROJECT_DIR$/ijm-basics/ijm-basics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-commons/ijm-commons.iml" filepath="$PROJECT_DIR$/ijm-commons/ijm-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-exam/ijm-exam.iml" filepath="$PROJECT_DIR$/ijm-exam/ijm-exam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-grader/ijm-grader.iml" filepath="$PROJECT_DIR$/ijm-grader/ijm-grader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-logger/ijm-logger.iml" filepath="$PROJECT_DIR$/ijm-logger/ijm-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-myms/ijm-myms.iml" filepath="$PROJECT_DIR$/ijm-myms/ijm-myms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-qna/ijm-qna.iml" filepath="$PROJECT_DIR$/ijm-qna/ijm-qna.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijm-ui/ijm-ui.iml" filepath="$PROJECT_DIR$/ijm-ui/ijm-ui.iml" />
+    </modules>
+  </component>
+</project>

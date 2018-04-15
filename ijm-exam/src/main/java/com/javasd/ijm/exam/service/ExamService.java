@@ -91,12 +91,12 @@ public class ExamService
     public Object getRandomQuestions(int nQuestions)
     {
 //        RestTemplate restTemplate = new RestTemplate();
-//        String url
-//                = "http://localhost:9017/getRandomQuestions" +
-//                "?nQuestions=" + nQuestions;
         String url
-                = "http://IJM-QNA/getRandomQuestions" +
+                = "http://localhost:9017/getRandomQuestions" +
                 "?nQuestions=" + nQuestions;
+//        String url
+//                = "http://IJM-QNA/getRandomQuestions" +
+//                "?nQuestions=" + nQuestions;
 
         Object randomQuestions = restTemplate.
                 getForObject(url, Object.class);
